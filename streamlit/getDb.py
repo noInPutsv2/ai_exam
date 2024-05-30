@@ -1,9 +1,9 @@
-import torch # type: ignore
-from langchain.vectorstores import Chroma # type: ignore
+
+from langchain_community.vectorstores import Chroma # type: ignore
 from langchain.callbacks.manager import CallbackManager # type: ignore
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler # type: ignore
-from langchain.embeddings import HuggingFaceEmbeddings # type: ignore
-from langchain.llms import Ollama # type: ignore
+from langchain_community.embeddings import HuggingFaceEmbeddings # type: ignore
+from langchain_community.llms import Ollama # type: ignore
 from langchain.chains import RetrievalQA # type: ignore
 from langchain.prompts import PromptTemplate # type: ignore
 
