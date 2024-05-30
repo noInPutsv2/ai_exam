@@ -1,0 +1,7 @@
+CREATE TABLE user_logs (
+log_id int NOT NULL PRIMARY KEY,
+id int NOT NULL,
+CONSTRAINT id FOREIGN KEY (id) REFERENCES dbo.users(id),
+log_in DATETIME NOT NULL,
+log_out DATETIME NOT NULL
+);
