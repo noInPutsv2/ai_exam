@@ -84,14 +84,30 @@ def readWebsite2(urls):
     return docs
 
 
-def loadURLs(urls):
+def loadBookURLs(urls):
     Links = []
     for url in urls:
         reqs = requests.get(url)
+        #Only finds links between the list of deaths (gets the main content)
         soup = BeautifulSoup(reqs.text.split("List of deaths")[1], 'html.parser')
         urls = soup.find_all("a")
         for link in urls:
             if "#" not in link.get('href') and "http" not in link.get('href') and "File" not in link.get('href'):
                 if link.get('href') not in Links:
                     Links.append(link.get('href'))
+    return Links
+
+def loadURL(url):
+    Links = []
+    reqs = requests.get(url)
+    soup = BeautifulSoup(reqs.text, 'html.parser')
+    content = soup.find(class_="mw-body-content")
+    if content is not None:
+        urls = content.find_all("a")
+        if urls is not None:
+            for link in urls:
+                if link.get('href') is not None:
+                    if "#" not in link.get('href') and "http" not in link.get('href') and "File" not in link.get('href'):
+                        if link.get('href') not in Links:
+                            Links.append(link.get('href'))
     return Links
