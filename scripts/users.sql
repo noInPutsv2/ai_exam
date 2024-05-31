@@ -1,5 +1,5 @@
 CREATE TABLE users (
-id int PRIMARY KEY,
+id int IDENTITY(1,1) PRIMARY KEY,
 username varchar(60) NOT NULL,
 password varchar(60) NOT NULL,
 email varchar(60) NOT NULL,
