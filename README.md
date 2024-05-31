@@ -29,7 +29,13 @@ Formålet med dette projekt er at skabe en chatbot, der er i stand til at besvar
 ## Henting af Harry Potter data
 Vi henter al vores data omkring Harry Potter og universet fra denne side: https://harrypotter.fandom.com/wiki/Main_Page. Her starter vi med at gå ind på siderne omkrig de syv (main) bøger og derfra tager info om dem, samt alle links på de sider, hvorefter vi går ind på de link tager information om de sider plus links vi ikke alledrede har i forvejen. Dette bliver gjort i Harry_Potter_chatbot_get_info notebooken hvor funtioner til at hente fra siderne ligger i myloadlib.py. Efter at have hentet i ukendt tid, fik vi en connection error men valgt at vi havde nok info med de 21996 dokumenter vi havde hentet. Alle dokumenterne bliver lagt i en jsonl film, som ligger under data mappen men ikke på github da den fylder over 100Mb, her kan de så blive brugt i andre notebooks.
 
-## Databaser
+## Streamlit app
+For at vise vores chatbot og dens funktioner har vi lavet en frontend med Streamlit.
+Den åbnes gennem cmd:
+```
+streamlit run main.py --client.showSidebarNavigation=False
+```
+# Databaser
 Projektet indeholder 4 forskellige typer databaser:
 * SQL (MSSQL)
 * NoSQL (MongoDB)
@@ -39,16 +45,16 @@ Projektet indeholder 4 forskellige typer databaser:
 Databaserne er sat op med Docker, testede operations systemer er:
 * Windows 11 + 4.30.0 (149282)
 
-### Vector database (Chroma)
+## Vector database (Chroma)
 
-### Graph database (Neo4J) 
+## Graph database (Neo4J) 
 Som vores graph database bruger vi Neo4j. Vi bruger graph databasen til at kunne se realationer mellem fx karakterene fra bøgerne.
 
-#### Transformere til graph
+### Transformere til graph
 Vi bruger Diffbot til at transformere vores text data vi har hentet om til en graph. Vi har valgt at bruge det fordi det er hurtigere og nemmere end selv at skulle gennemgå de over 20000 dokumenter vi har hentet og lave noder og realationer. Dog ville det være bedst hvis vi selv gjorde det, da diffbot har nogle forud indstillinger som ikke er de bedste til vores text. Bla. kunne det være at vi havde brug for noder til besværgelser (fra bøgerne).
 
-#### graph shema
-#### graph algorithmer 
+### graph shema
+### graph algorithmer 
 
 ### SQL database (MSSQL)
 #### Opsætning af MSSQL database
@@ -56,7 +62,7 @@ Vi bruger SQL Server 2022 CU12
 1. ```
     docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=StrPass2222123" -p      1433:1433 -d mcr.microsoft.com/mssql/server:2022-CU12-ubuntu-22.04	
     ```
-### NoSQL (MongoDB)
+## NoSQL (MongoDB)
 Vores MongoDB opsætning består af:
 * 2 config server
 * 2 routers
@@ -64,7 +70,7 @@ Vores MongoDB opsætning består af:
 
 ![MongoDB architecture](./git_photos/mongodb_architecture.jpg)
 
-#### Opsætning af MongoDB database
+### Opsætning af MongoDB database
 Vi bruger MongoDB version 7.0.
 1. Opret netværk for alle mongo services 
     - ```
@@ -117,10 +123,14 @@ Vi bruger MongoDB version 7.0.
         sh.addShard("shard-2-replSet/shard-2-node-a:27017", "shard-2-replSet/shard-2-node-b:27017", "shard-2-replSet/shard-2-node-c:27017")
         ```
 
-### ER diagram
 
-## MongoDB
+### Funtioner til mongo 
+- I vores Database har vi en collection til vores chat histore. Deri har den et selvsat id, user_id, user_input, ai_input, og et timestamp. Det giver brugerne mulighed for at kunne se de spørgmål de har stillet samt svar de har fået, og vi kan set det og hvornår de er blevet stillet. 
+- Gennem streamlit appen kan vi hente chathistorikken for brugeren ved det id. funtionen ligger i /streamlit/MongoDB.py.
+- vi kan tilføje mere data til den gennem funktionen InsertChatHistory i /streamlit/MongoDB.py. Den bliver kaldt når chatbotten har svaret på et spørgsmål.
+- vi kan slette dataen for en specifik bruger med delete_chat_history i /streamlit/MongoDB.py. Den bliver kaldt når brugeren bliver slettet i bruger databasen.
+- vi har valgt ikke at have en update funtion da vi ikke mener at der skal kunne opdateres i chat historikken. 
 
-## Streamlit app
 
-## LLM
+
+# LLM

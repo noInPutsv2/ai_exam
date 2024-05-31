@@ -1,5 +1,6 @@
 import streamlit as st # type: ignore
 import pyodbc # type: ignore
+import MongoDB as mdb
 
 @st.cache_resource
 def init_connection():
@@ -17,12 +18,7 @@ def init_connection():
 
 conn = init_connection()
 
-@st.cache_data(ttl=600)
-def run_query(query):
-    with conn.cursor() as cur:
-        cur.execute(query)
-        return cur.fetchone()
-
+###Checks if the username and password match the database
 def check_login(username, password):
     query = f"SELECT id FROM dbo.users WHERE username = '{username}' AND password = '{password}'"
     with conn.cursor() as cur:
@@ -30,6 +26,7 @@ def check_login(username, password):
             return cur.execute(query).fetchone()[0]
     return False
 
+###Checks if the username already exists in the database
 def check_username(username):
     query = f"SELECT * FROM dbo.users WHERE username = '{username}'"
     with conn.cursor() as cur:
@@ -37,12 +34,34 @@ def check_username(username):
             return False
     return True
 
+
+###Creates a new user in the database
 def register_user(email, username, password):
     query = f"INSERT INTO dbo.users (email, username, password) VALUES ('{email}', '{username}', '{password}')"
     with conn.cursor() as cur:
         return cur.execute(query)
-    
+
+### adds data to userlog table   
 def add_to_logs(userid, login):
     query =f"INSERT INTO dbo.user_logs (id, time_stamp, log_in) VALUES ('{userid}', GETDATE(), '{login}')"
+    with conn.cursor() as cur:
+        return cur.execute(query)
+    
+###Changes the password of the user
+def change_password(userid, password):
+    query = f"UPDATE dbo.users SET password = '{password}' WHERE id = '{userid}'"
+    with conn.cursor() as cur:
+        return cur.execute(query)
+    
+###changes the email of the user
+def change_email(userid, email):
+    query = f"UPDATE dbo.users SET email = '{email}' WHERE id = '{userid}'"
+    with conn.cursor() as cur:
+        return cur.execute(query)
+    
+###Deletes the user from the database
+def delete_user(userid):
+    mdb.delete_chat_history(userid)
+    query = f"DELETE FROM dbo.users WHERE id = '{userid}'"
     with conn.cursor() as cur:
         return cur.execute(query)
