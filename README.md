@@ -51,7 +51,11 @@ Vi bruger Diffbot til at transformere vores text data vi har hentet om til en gr
 #### graph algorithmer 
 
 ### SQL database (MSSQL)
-
+#### Opsætning af MSSQL database
+Vi bruger SQL Server 2022 CU12
+1. ```
+    docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=StrPass2222123" -p      1433:1433 -d mcr.microsoft.com/mssql/server:2022-CU12-ubuntu-22.04	
+    ```
 ### NoSQL (MongoDB)
 Vores MongoDB opsætning består af:
 * 2 config server
