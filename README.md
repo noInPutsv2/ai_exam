@@ -24,3 +24,24 @@ Formålet med dette projekt er at skabe en chatbot, der er i stand til at besvar
     - Relationel Database (SQL)
     - Graph Database
     - Vector Database
+
+
+## Henting af Harry Potter data
+
+## vector database
+
+## Graph dataBase
+Som vores graph database bruger vi Neo4j. Vi bruger graph databasen til at kunne se realationer mellem fx karakterene fra bøgerne.
+### transformere til graph
+Vi bruger Diffbot til at transformere vores text data vi har hentet om til en graph. Vi har valgt at bruge det fordi det er hurtigere og nemmere end selv at skulle gennemgå de over 20000 dokumenter vi har hentet og lave noder og realationer. Dog ville det være bedst hvis vi selv gjorde det, da diffbot har nogle forud indstillinger som ikke er de bedste til vores text. Bla. kunne det være at vi havde brug for noder til besværgelser (fra bøgerne).
+### graph shema
+### graph algorithmer 
+
+## SQL databse
+### ER diagram
+
+## MongoDB
+
+## Streamlit app
+
+## LLM
