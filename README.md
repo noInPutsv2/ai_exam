@@ -52,6 +52,11 @@ Databaserne er sat op med Docker, testede operations systemer er:
     ```
 ### Graph database (Neo4J) 
 Som vores graph database bruger vi Neo4j. Vi bruger graph databasen til at kunne se realationer mellem fx karakterene fra bøgerne.
+#### Opsætning af Graph database
+Vi bruger Neo4J 5.20 Community Edition
+1. ```
+    docker run --name neo4jdb --publish=7474:7474 --publish=7687:7687 --volume=$HOME/neo4j/data:/data -d neo4j:5.20.0
+    ```
 
 #### Transformere til graph
 Vi bruger Diffbot til at transformere vores text data vi har hentet om til en graph. Vi har valgt at bruge det fordi det er hurtigere og nemmere end selv at skulle gennemgå de over 20000 dokumenter vi har hentet og lave noder og realationer. Dog ville det være bedst hvis vi selv gjorde det, da diffbot har nogle forud indstillinger som ikke er de bedste til vores text. Bla. kunne det være at vi havde brug for noder til besværgelser (fra bøgerne).
