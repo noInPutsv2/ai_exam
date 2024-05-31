@@ -35,7 +35,7 @@ Den åbnes gennem cmd:
 ```
 streamlit run main.py --client.showSidebarNavigation=False
 ```
-# Databaser
+## Databaser
 Projektet indeholder 4 forskellige typer databaser:
 * SQL (MSSQL)
 * NoSQL (MongoDB)
@@ -45,12 +45,15 @@ Projektet indeholder 4 forskellige typer databaser:
 Databaserne er sat op med Docker, testede operations systemer er:
 * Windows 11 + 4.30.0 (149282)
 
-## Vector database (Chroma)
-
-## Graph database (Neo4J) 
+### Vector database (Chroma)
+#### Opsætning af Vector database
+1. ```
+    docker run -p 8000:8000 -d --name chromadb chromadb/chroma:latest 
+    ```
+### Graph database (Neo4J) 
 Som vores graph database bruger vi Neo4j. Vi bruger graph databasen til at kunne se realationer mellem fx karakterene fra bøgerne.
 
-### Transformere til graph
+#### Transformere til graph
 Vi bruger Diffbot til at transformere vores text data vi har hentet om til en graph. Vi har valgt at bruge det fordi det er hurtigere og nemmere end selv at skulle gennemgå de over 20000 dokumenter vi har hentet og lave noder og realationer. Dog ville det være bedst hvis vi selv gjorde det, da diffbot har nogle forud indstillinger som ikke er de bedste til vores text. Bla. kunne det være at vi havde brug for noder til besværgelser (fra bøgerne).
 
 ### graph shema
@@ -60,7 +63,7 @@ Vi bruger Diffbot til at transformere vores text data vi har hentet om til en gr
 #### Opsætning af MSSQL database
 Vi bruger SQL Server 2022 CU12
 1. ```
-    docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=StrPass2222123" -p      1433:1433 -d mcr.microsoft.com/mssql/server:2022-CU12-ubuntu-22.04	
+    docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=StrPass2222123" -p      1433:1433 -d --name mssql-server mcr.microsoft.com/mssql/server:2022-CU12-ubuntu-22.04	
     ```
 ## NoSQL (MongoDB)
 Vores MongoDB opsætning består af:
