@@ -53,6 +53,12 @@ Vi bruger Diffbot til at transformere vores text data vi har hentet om til en gr
 ### SQL database (MSSQL)
 
 ### NoSQL (MongoDB)
+Vores MongoDB opsætning består af:
+* 2 config server
+* 2 routers
+* 2 Shards (Replica sets)
+
+![MongoDB architecture](./git_photos/mongodb_architecture.jpg)
 
 #### Opsætning af MongoDB database
 Vi bruger MongoDB version 7.0.
