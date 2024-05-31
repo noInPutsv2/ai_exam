@@ -58,7 +58,7 @@ Website: localhost:7474
 Username: neo4j
 Password: neo4j
 1. ```
-    docker run --name neo4jdb --publish=7474:7474 --publish=7687:7687 --volume=$HOME/neo4j/data:/data --env NEO4J_PLUGINS='["apoc"]' -d neo4j:5.20.0
+    docker run --name neo4jdb --publish=7474:7474 --publish=7687:7687  --env NEO4J_apoc_export_file_enabled=true --env NEO4J_apoc_import_file_enabled=true --env NEO4J_apoc_import_file_use__neo4j__config=true --env NEO4J_ACCEPT_LICENSE_AGREEMENT=yes  --env NEO4J_PLUGINS='["apoc", "graph-data-science"]' --volume=$HOME/neo4j/plugins:/plugins --volume=$HOME/neo4j/data:/data -d neo4j:5.20.0
     ```
 
 #### Transformere til graph
