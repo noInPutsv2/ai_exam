@@ -36,8 +36,8 @@ with st.sidebar:
         else:
             user = ravenclaw
         le.logout()
-        if st.button("Change password"):
-            st.switch_page("pages/Change_password_page.py")
+        if st.button("update user info"):
+            st.switch_page("pages/update_user_page.py")
         st.button(label = "Clear conversation", on_click = reset)
     
     
