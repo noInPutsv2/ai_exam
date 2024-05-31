@@ -54,6 +54,9 @@ Databaserne er sat op med Docker, testede operations systemer er:
 Som vores graph database bruger vi Neo4j. Vi bruger graph databasen til at kunne se realationer mellem fx karakterene fra bøgerne.
 #### Opsætning af Graph database
 Vi bruger Neo4J 5.20 Community Edition
+Website: localhost:7474
+Username: neo4j
+Password: neo4j
 1. ```
     docker run --name neo4jdb --publish=7474:7474 --publish=7687:7687 --volume=$HOME/neo4j/data:/data -d neo4j:5.20.0
     ```
