@@ -27,6 +27,7 @@ def login(username, password):
     if userid:
         db.add_to_logs(userid, 1)
         Set_session_state(username, userid, True)
+        st.switch_page("main.py")
         #self.cookie_handler.set_cookie()
     else:
         Set_session_state(None, None, False)
@@ -35,3 +36,4 @@ def logout():
      if st.button('logout'):
         db.add_to_logs(st.session_state['userid'], 0)
         Set_session_state(None, None, None)
+        st.switch_page("main.py")
