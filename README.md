@@ -40,6 +40,7 @@ Vores Streamlit app har tre sider:
 - Main page hvor man kan logge ind og når man er logget ind har man adgang til chatbotten.
 - create user page hvor man kan oprette en ny bruger
 - update user page hvor man kan opdatere informationer når man er logget ind
+- en admin page hvor folk med admin rettigheder har mulighed for at se alle brugere og logs
 # Databaser
 Projektet indeholder 4 forskellige typer databaser:
 * SQL (MSSQL)

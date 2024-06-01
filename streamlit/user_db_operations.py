@@ -1,6 +1,7 @@
 import streamlit as st # type: ignore
 import pyodbc # type: ignore
 import MongoDB as mdb
+import pandas as pd
 
 @st.cache_resource
 def init_connection():
@@ -65,3 +66,26 @@ def delete_user(userid):
     query = f"DELETE FROM dbo.users WHERE id = '{userid}'"
     with conn.cursor() as cur:
         return cur.execute(query)
+
+def get_logs():
+    query = f"SELECT * FROM dbo.user_logs"
+    with conn.cursor() as cur:
+        return pd.read_sql_query(query, conn)
+    
+def get_user_logs(id):
+    query = f"SELECT * FROM dbo.user_logs WHERE id = '{id}'"
+    with conn.cursor() as cur:
+        return pd.read_sql_query(query, conn)
+
+def get_users():
+    query = f"SELECT * FROM dbo.users"
+    with conn.cursor() as cur:
+        return pd.read_sql_query(query, conn)
+
+
+def admin_login(username, password):
+    query = f"SELECT id FROM dbo.admin WHERE username = '{username}' AND password = '{password}'"
+    with conn.cursor() as cur:
+        if cur.execute(query).fetchone():
+            return cur.execute(query).fetchone()[0]
+    return False
