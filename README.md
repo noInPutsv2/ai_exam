@@ -58,7 +58,7 @@ Website: localhost:7474
 Username: neo4j
 Password: neo4j
 1. ```
-    docker run --name neo4jdb --publish=7474:7474 --publish=7687:7687  --env NEO4J_apoc_export_file_enabled=true --env NEO4J_apoc_import_file_enabled=true --env NEO4J_apoc_import_file_use__neo4j__config=true --env NEO4J_ACCEPT_LICENSE_AGREEMENT=yes  --env NEO4J_PLUGINS='["apoc", "graph-data-science"]' --volume=$HOME/neo4j/plugins:/plugins --volume=$HOME/neo4j/data:/data -d neo4j:5.20.0
+    docker run --name neo4jdb --publish=7474:7474 --publish=7687:7687 --env NEO4J_dbms_security_procedures_unrestricted=apoc. --env NEO4J_apoc_export_file_enabled=true --env NEO4J_apoc_import_file_enabled=true --env NEO4J_apoc_import_file_use__neo4j__config=true --env NEO4J_ACCEPT_LICENSE_AGREEMENT=yes  --env NEO4J_PLUGINS='["apoc", "graph-data-science"]' --volume=$HOME/neo4j/plugins:/plugins --volume=$HOME/neo4j/data:/data -d neo4j:5.20.0
     ```
 
 #### Transformere til graph
@@ -70,8 +70,8 @@ Vi bruger Diffbot til at transformere vores text data vi har hentet om til en gr
 ### SQL database (MSSQL)
 Vi bruger SQL database til vores brugersystem, hvor vi også logger når en bruger logger ind eller ud af systemet. Disse funktioner er opdelt i to tables, users og user_log. 
 
-![Users ER diagram](./git_photos/users_er_db.jpg)
-![Users ER draw](./git_photos/users_draw.jpg)
+![Users ER diagram](./git_photos/users_er_db.JPG)
+![Users ER draw](./git_photos/users_draw.JPG)
 
 #### Opsætning af MSSQL database
 Vi bruger SQL Server 2022 CU12
