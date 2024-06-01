@@ -26,6 +26,19 @@ CREATE TABLE user_logs (
 );
 GO
 
+-- Create admin login table
+CREATE TABLE admin (
+    id int IDENTITY(1,1) PRIMARY KEY,
+    username varchar(60) NOT NULL,
+    name varchar(60) NOT NULL,
+    password varchar(60) NOT NULL,
+);
+GO
+
+-- Insert admin login for demo 
+INSERT INTO admin (username, name, password) VALUES ('test', 'Line', 'test');
+GO
+
 -- Create login procedure
 CREATE PROCEDURE login 
    @Username varchar(60),
