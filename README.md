@@ -93,7 +93,7 @@ Vi bruger SQL database til vores brugersystem, hvor vi også logger når en brug
 Vi bruger SQL Server 2022 CU12
 1. Åben terminal i mappen "Docker" 
 2. ```
-    docker build -t ai_db_sql_docker .
+    docker build -t ai_db_sql_docker . --no-cache
     ```
 2. ```
     docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=StrPass2222123" -p 1433:1433 -d --name mssql-server ai_db_sql_docker	

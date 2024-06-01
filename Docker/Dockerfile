@@ -4,10 +4,6 @@ USER root
 
 # Create a config directory
 RUN mkdir -p /usr/config
-
-# Set mssql as owner of the app directory
-RUN chown mssql /usr/config
-
 WORKDIR /usr/config
 
 # Bundle config source
