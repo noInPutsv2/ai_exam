@@ -64,10 +64,15 @@ Password: neo4j
 #### Transformere til graph
 Vi bruger Diffbot til at transformere vores text data vi har hentet om til en graph. Vi har valgt at bruge det fordi det er hurtigere og nemmere end selv at skulle gennemgå de over 20000 dokumenter vi har hentet og lave noder og realationer. Dog ville det være bedst hvis vi selv gjorde det, da diffbot har nogle forud indstillinger som ikke er de bedste til vores text. Bla. kunne det være at vi havde brug for noder til besværgelser (fra bøgerne).
 
-### graph shema
-### graph algorithmer 
+### graph schema
+### graph algoritmer 
 
 ### SQL database (MSSQL)
+Vi bruger SQL database til vores brugersystem, hvor vi også logger når en bruger logger ind eller ud af systemet. Disse funktioner er opdelt i to tables, users og user_log. 
+
+![Users ER diagram](./git_photos/users_er_db.jpg)
+![Users ER draw](./git_photos/users_er_draw.jpg)
+
 #### Opsætning af MSSQL database
 Vi bruger SQL Server 2022 CU12
 1. ```
