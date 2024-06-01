@@ -71,7 +71,7 @@ Vi bruger Diffbot til at transformere vores text data vi har hentet om til en gr
 Vi bruger SQL database til vores brugersystem, hvor vi også logger når en bruger logger ind eller ud af systemet. Disse funktioner er opdelt i to tables, users og user_log. 
 
 ![Users ER diagram](./git_photos/users_er_db.jpg)
-![Users ER draw](./git_photos/users_er_draw.jpg)
+![Users ER draw](./git_photos/users_draw.jpg)
 
 #### Opsætning af MSSQL database
 Vi bruger SQL Server 2022 CU12
