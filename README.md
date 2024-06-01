@@ -35,7 +35,7 @@ Den åbnes gennem cmd:
 ```
 streamlit run main.py --client.showSidebarNavigation=False
 ```
-# sider
+### sider
 Vores Streamlit app har tre sider:
 - Main page hvor man kan logge ind og når man er logget ind har man adgang til chatbotten.
 - create user page hvor man kan oprette en ny bruger
