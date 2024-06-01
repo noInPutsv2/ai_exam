@@ -51,10 +51,21 @@ Databaserne er sat op med Docker, testede operations systemer er:
 * Windows 11 + 4.30.0 (149282)
 
 ## Vector database (Chroma)
-#### Opsætning af Vector database
+Vi bruger en vector database til at opbevare informationen til chatbotten.
+### Opsætning af Vector database
 1. ```
     docker run -p 8000:8000 -d --name chromadb chromadb/chroma:latest 
     ```
+### Vector database funktioner
+I Vector_database_functions filen ligger alle vores funktioner til at tilgå databasen
+- vi kan oprette en ny collection og smide data ind i den
+- tilføje data til den, hvis der skulle komme ny information
+- hente databasen så vi kan bruge den
+- update informationen på en key, hvis vi skulle have brug for at opdatere
+- slette på en key
+- slette på den sidste key
+- slette hele collectionen
+
 ## Graph database (Neo4J) 
 Som vores graph database bruger vi Neo4j. Vi bruger graph databasen til at kunne se realationer mellem fx karakterene fra bøgerne.
 #### Opsætning af Graph database
