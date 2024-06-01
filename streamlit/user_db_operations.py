@@ -23,8 +23,9 @@ conn = init_connection()
 def check_login(username, password):
     query = f"SELECT id FROM dbo.users WHERE username = '{username}' AND password = '{password}'"
     with conn.cursor() as cur:
-        if cur.execute(query).fetchone():
-            return cur.execute(query).fetchone()[0]
+        res = cur.execute(query).fetchone()
+        if res:
+            return res[0]
     return False
 
 ###Checks if the username already exists in the database
@@ -78,7 +79,7 @@ def get_user_logs(id):
         return pd.read_sql_query(query, conn)
 
 def get_users():
-    query = f"SELECT * FROM dbo.users"
+    query = f"SELECT * FROM user_info"
     with conn.cursor() as cur:
         return pd.read_sql_query(query, conn)
 

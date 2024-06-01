@@ -23,7 +23,7 @@ def Logs():
 def users():
     st.title("Users")
     data_df = udb.get_users()
-    st.dataframe(data_df, width=1000, hide_index = True)
+    st.dataframe(data_df, width=1000, hide_index = True, selection_mode = 'single-row')
 
 
 if st.session_state["admin"]:

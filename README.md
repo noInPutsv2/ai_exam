@@ -90,13 +90,19 @@ Vi bruger SQL database til vores brugersystem, hvor vi også logger når en brug
 ![Users ER diagram](./git_photos/users_er_db.JPG)
 ![Users ER draw](./git_photos/users_draw.JPG)
 
-#### Opsætning af MSSQL database
+### Opsætning af MSSQL database
 Vi bruger SQL Server 2022 CU12
 1. Åben terminal i mappen "Docker" 
 2. docker build -t ai_db_sql_docker .
 2. ```
     docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=StrPass2222123" -p 1433:1433 -d --name mssql-server ai_db_sql_docker	
     ```
+### user data
+for at have noget data i vores database lavede vi en masse fake data ved hjælp af https://www.mockaroo.com/, hvor vi fik den til at generere username, email og password for os. De generede filer ligger user data.sql.
+
+### View
+Vi har lavet et view kaldet user info, som tager id, username, email og house fra user table, da vi gerne vil have information uden password, da admin skal kunne se informationerne uden at se passwordet. 
+
 ## NoSQL (MongoDB)
 Vores MongoDB opsætning består af:
 * 2 config server
