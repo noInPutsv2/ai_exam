@@ -35,7 +35,12 @@ Den åbnes gennem cmd:
 ```
 streamlit run main.py --client.showSidebarNavigation=False
 ```
-## Databaser
+# sider
+Vores Streamlit app har tre sider:
+- Main page hvor man kan logge ind og når man er logget ind har man adgang til chatbotten.
+- create user page hvor man kan oprette en ny bruger
+- update user page hvor man kan opdatere informationer når man er logget ind
+# Databaser
 Projektet indeholder 4 forskellige typer databaser:
 * SQL (MSSQL)
 * NoSQL (MongoDB)
@@ -45,12 +50,23 @@ Projektet indeholder 4 forskellige typer databaser:
 Databaserne er sat op med Docker, testede operations systemer er:
 * Windows 11 + 4.30.0 (149282)
 
-### Vector database (Chroma)
-#### Opsætning af Vector database
+## Vector database (Chroma)
+Vi bruger en vector database til at opbevare informationen til chatbotten.
+### Opsætning af Vector database
 1. ```
     docker run -p 8000:8000 -d --name chromadb chromadb/chroma:latest 
     ```
-### Graph database (Neo4J) 
+### Vector database funktioner
+I Vector_database_functions filen ligger alle vores funktioner til at tilgå databasen
+- vi kan oprette en ny collection og smide data ind i den
+- tilføje data til den, hvis der skulle komme ny information
+- hente databasen så vi kan bruge den
+- update informationen på en key, hvis vi skulle have brug for at opdatere
+- slette på en key
+- slette på den sidste key
+- slette hele collectionen
+
+## Graph database (Neo4J) 
 Som vores graph database bruger vi Neo4j. Vi bruger graph databasen til at kunne se realationer mellem fx karakterene fra bøgerne.
 #### Opsætning af Graph database
 Vi bruger Neo4J 5.20 Community Edition
@@ -67,7 +83,7 @@ Vi bruger Diffbot til at transformere vores text data vi har hentet om til en gr
 ### graph schema
 ### graph algoritmer 
 
-### SQL database (MSSQL)
+## SQL database (MSSQL)
 Vi bruger SQL database til vores brugersystem, hvor vi også logger når en bruger logger ind eller ud af systemet. Disse funktioner er opdelt i to tables, users og user_log. 
 
 ![Users ER diagram](./git_photos/users_er_db.JPG)
