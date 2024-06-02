@@ -105,7 +105,35 @@ Her kan vi se at der er følgende noder i databasen:
 - Skill
 
 
-### graph algoritmer 
+### graph algoritmer
+Optimizing search results by ordering them according to some heuristic.
+https://www.geeksforgeeks.org/greedy-algorithms/
+https://www.w3schools.com/dsa/dsa_ref_greedy.php
+
+String searching, such as finding occurrences of a word in a text document.
+https://www.geeksforgeeks.org/boyer-moore-algorithm-for-pattern-searching/
+
+Used to find strongly connected componenents 
+https://www.geeksforgeeks.org/strongly-connected-components/
+https://www.geeksforgeeks.org/connected-components-in-an-undirected-graph/
+
+Tarjan
+Used to find strongly connected componenents
+https://www.geeksforgeeks.org/tarjan-algorithm-find-strongly-connected-components/
+
+Kosaraju
+Used to find strongly connected componenents
+https://www.geeksforgeeks.org/connectivity-in-a-directed-graph/
+
+Breadth-first-Search
+BFS may be used to discover the locations nearest to a specific origin point.
+The BFS algorithm is used in peer-to-peer networks as a search technique to discover all neighboring nodes.
+BFS is used in web crawlers to build web page indexes. It starts at the source page and works its way through all of the links connected with it. Every web page is treated as a node in the network graph.
+https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/
+
+https://memgraph.com/blog/graph-algorithms-applications
+https://memgraph.com/blog/graph-algorithms-cheat-sheet-for-coding-interviews
+
 
 ## SQL database (MSSQL)
 Vi bruger SQL database til vores brugersystem, hvor vi også logger når en bruger logger ind eller ud af systemet. Disse funktioner er opdelt i to tables, users og user_log. 
