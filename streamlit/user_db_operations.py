@@ -30,7 +30,7 @@ def check_login(username, password):
 
 ###Checks if the username already exists in the database
 def check_username(username):
-    query = f"EXEC username_check @Username ='{username}'"
+    query = f"SELECT * FROM dbo.users WHERE username = '{username}'"
     with conn.cursor() as cur:
         if cur.execute(query).fetchone():
             return False

@@ -24,3 +24,10 @@ def InsertChatHistory(user_id, user_input, chatbot_response):
 def delete_chat_history(userid):
     db = client.DB_Eksamen
     db.Chats.delete_many({"user_id": userid})
+
+def get_number_of_chats(userid):
+    db = client.DB_Eksamen
+    match = {"$match": {"user_id": userid}}
+    group = {"$group": {"_id": "$user_id", "number of Chats": {"$sum": 1}}}
+    pipeline = [ match, group]
+    return db.Chats.aggregate(pipeline)

@@ -2,7 +2,7 @@
 ## Gruppemedlemmer
 * Benjamin Ritthidech Sommervoll (CPH-BS202)
 * Line Phoebe Wienke (*)
-* Louise Sitting Estrup (*)
+* Louise Sitting Estrup (CPH-LE115)
 
 ## Projektbeskrivelse
 Formålet med dette projekt er at skabe en chatbot, der er i stand til at besvare spørgsmål om Harry Potter universet. Chatbotten skal hente informationer fra en database omhandlende bøgerne, filmene og andre relaterede medier for at give svar.
@@ -10,7 +10,15 @@ Formålet med dette projekt er at skabe en chatbot, der er i stand til at besvar
 
 ## Application Domain
 ### Use cases
-
+- brugeren skal kunne spørge chatbotten om spørgmål
+- brugeren skal kunne få svar fra chatbotten
+- brugeren skal kunne logge ind
+- brugeren skal kunne logge ud
+- brugeren skal kunne opdatere sin email og sit password
+- brugeren skal kunne slette sin konto
+- brugeren skal kunne se sin chat historik
+- admin skal kunne se brugere
+- admin skal kunne se logs over login og logout
 ### Functional requirements
 - Chatbotten skal kunne svare på spørgsmål relateret til Harry Potter
 - Brugere skal kunne se tidligere interaktioner med chatbotten (Chat historik)
@@ -138,8 +146,8 @@ https://memgraph.com/blog/graph-algorithms-cheat-sheet-for-coding-interviews
 ## SQL database (MSSQL)
 Vi bruger SQL database til vores brugersystem, hvor vi også logger når en bruger logger ind eller ud af systemet. Disse funktioner er opdelt i to tables, users og user_log. 
 
-![Users ER diagram](./git_photos/users_er_db.JPG)
-![Users ER draw](./git_photos/users_draw.JPG)
+![Users ER diagram](./git_photos/users_diagram.JPG)
+![Users Schema](./git_photos/users_schema.JPG)
 
 ### Opsætning af MSSQL database
 Vi bruger SQL Server 2022 CU12
@@ -155,6 +163,17 @@ for at have noget data i vores database lavede vi en masse fake data ved hjælp 
 
 ### View
 Vi har lavet et view kaldet user info, som tager id, username, email og house fra user table, da vi gerne vil have information uden password, da admin skal kunne se informationerne uden at se passwordet. 
+
+### Index
+Vi har lavet et index på username collonen i users tabellen, da vi har brug for at gennem søge den, når en ny bruger vil oprette sig da username skal være unikt. Vi har lavet Indexet, tog et random username, og sammenligende qurryen:
+- SELECT username FROM dbo.users WHERE username = 'abannard8o' 
+med 
+- SELECT username FROM dbo.users WITH (INDEX(user_index)) WHERE username = 'abannard8o'. 
+
+![Uden Index](./git_photos/Clustered_index_scan.png) 
+![Med Index](./git_photos/Index_seek.png)
+
+Det er tydeligt at se at værdierne er væsenligt laver, og at indexet er godt at have med. 
 
 ## NoSQL (MongoDB)
 Vores MongoDB opsætning består af:
@@ -224,7 +243,7 @@ Vi bruger MongoDB version 7.0.
 - vi kan tilføje mere data til den gennem funktionen InsertChatHistory i /streamlit/MongoDB.py. Den bliver kaldt når chatbotten har svaret på et spørgsmål.
 - vi kan slette dataen for en specifik bruger med delete_chat_history i /streamlit/MongoDB.py. Den bliver kaldt når brugeren bliver slettet i bruger databasen.
 - vi har valgt ikke at have en update funtion da vi ikke mener at der skal kunne opdateres i chat historikken. 
-
+- Vi har lavet en aggregation pipeline til at kunne filtrer og lægge antallet af chats for en enkelte bruger sammen, den ligger i funktionen get_number_of_chats i /streamlit/MongoDB.py.
 
 
 # LLM

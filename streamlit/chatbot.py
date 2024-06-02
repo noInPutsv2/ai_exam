@@ -2,18 +2,12 @@ import streamlit as st # type: ignore
 import random
 import time
 import getDb
+import MongoDB as mdb
 
-def response_generator():
-    response = random.choice(
-        [
-            "Hello there! How can I assist you today?",
-            "Hi, human! Is there anything I can help you with?",
-            "Do you need help?",
-        ]
-    )
-    for word in response.split():
-        yield word + " "
-        time.sleep(0.05)
+def makeChatHistory(items, user, assistent):
+    for i in items:
+        st.session_state.messages.append({"role": "user", "avatar": user, "content": i["user_input"]})
+        st.session_state.messages.append({"role": "assistant", "avatar": assistent, "content": i["chatbot_response"]})
 
 
 def Show(user, assistent):
@@ -23,6 +17,8 @@ def Show(user, assistent):
     # Initialize chat history
     if "messages" not in st.session_state:
         st.session_state.messages = []
+        makeChatHistory(mdb.GetChatHistory(st.session_state['userid']), user, assistent)
+    
 
     # Display chat messages from history on app rerun
     for message in st.session_state.messages:
@@ -43,6 +39,8 @@ def Show(user, assistent):
         st.session_state.messages.append({"role": "user", "avatar": user , "content": prompt})
 
         with st.chat_message("assistant"):
-            response = st.write(getDb.ask_question(prompt))
+            response = getDb.ask_question(prompt)
+            st.write(response)
         # Add assistant response to chat history
         st.session_state.messages.append({"role": "assistant", "avatar": assistent,  "content": response})
+        mdb.InsertChatHistory(st.session_state['userid'], prompt, response)

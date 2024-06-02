@@ -2,6 +2,8 @@ import streamlit as st # type: ignore
 from streamlit_option_menu import option_menu # type: ignore
 import pandas as pd
 import user_db_operations as udb
+import MongoDB as mdb
+
 
 if 'admin' not in st.session_state:
             st.session_state['admin'] = None
@@ -19,12 +21,19 @@ def Logs():
             data_df = udb.get_logs()
     
     st.dataframe(data_df, width=1000, hide_index = True) 
+    
 
 def users():
     st.title("Users")
     data_df = udb.get_users()
-    st.dataframe(data_df, width=1000, hide_index = True, selection_mode = 'single-row')
+    row = st.dataframe(data_df, width=1000, hide_index = True)
+    id = st.number_input(label = "see number of chats for each user", step = None, format = "%d")
+    if st.button("search"):
+        for i in mdb.get_number_of_chats(id):
+            st.write(i)
 
+def test():
+    st.write(st.session_state["admin"])
 
 if st.session_state["admin"]:
     with st.sidebar:
@@ -35,8 +44,10 @@ if st.session_state["admin"]:
 
     if selected == "Users":
         users()
+        
     elif selected == "Logs":
         Logs()
+    
 else:
     admin_login_form = st.form('Admin Login')
     admin_login_form .subheader('Admin Login')
