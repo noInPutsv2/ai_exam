@@ -164,6 +164,17 @@ for at have noget data i vores database lavede vi en masse fake data ved hjælp 
 ### View
 Vi har lavet et view kaldet user info, som tager id, username, email og house fra user table, da vi gerne vil have information uden password, da admin skal kunne se informationerne uden at se passwordet. 
 
+### Index
+Vi har lavet et index på username collonen i users tabellen, da vi har brug for at gennem søge den, når en ny bruger vil oprette sig da username skal være unikt. Vi har lavet Indexet, tog et random username, og sammenligende qurryen:
+- SELECT username FROM dbo.users WHERE username = 'abannard8o' 
+med 
+- SELECT username FROM dbo.users WITH (INDEX(user_index)) WHERE username = 'abannard8o'. 
+
+![Uden Index](./git_photos/Clustered_index_scan.png) 
+![Med Index](./git_photos/Index_seek.png)
+
+Det er tydeligt at se at værdierne er væsenligt laver, og at indexet er godt at have med. 
+
 ## NoSQL (MongoDB)
 Vores MongoDB opsætning består af:
 * 2 config server
