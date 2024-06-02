@@ -10,7 +10,15 @@ Formålet med dette projekt er at skabe en chatbot, der er i stand til at besvar
 
 ## Application Domain
 ### Use cases
-
+- brugeren skal kunne spørge chatbotten om spørgmål
+- brugeren skal kunne få svar fra chatbotten
+- brugeren skal kunne logge ind
+- brugeren skal kunne logge ud
+- brugeren skal kunne opdatere sin email og sit password
+- brugeren skal kunne slette sin konto
+- brugeren skal kunne se sin chat historik
+- admin skal kunne se brugere
+- admin skal kunne se logs over login og logout
 ### Functional requirements
 - Chatbotten skal kunne svare på spørgsmål relateret til Harry Potter
 - Brugere skal kunne se tidligere interaktioner med chatbotten (Chat historik)
