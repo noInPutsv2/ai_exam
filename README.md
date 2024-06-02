@@ -139,7 +139,7 @@ https://memgraph.com/blog/graph-algorithms-cheat-sheet-for-coding-interviews
 Vi bruger SQL database til vores brugersystem, hvor vi også logger når en bruger logger ind eller ud af systemet. Disse funktioner er opdelt i to tables, users og user_log. 
 
 ![Users ER diagram](./git_photos/users_diagram.JPG)
-![Users ER draw](./git_photos/users_draw.JPG)
+![Users Schema](./git_photos/users_schema.JPG)
 
 ### Opsætning af MSSQL database
 Vi bruger SQL Server 2022 CU12
