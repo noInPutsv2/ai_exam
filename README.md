@@ -2,7 +2,7 @@
 ## Gruppemedlemmer
 * Benjamin Ritthidech Sommervoll (CPH-BS202)
 * Line Phoebe Wienke (*)
-* Louise Sitting Estrup (*)
+* Louise Sitting Estrup (CPH-LE115)
 
 ## Projektbeskrivelse
 Formålet med dette projekt er at skabe en chatbot, der er i stand til at besvare spørgsmål om Harry Potter universet. Chatbotten skal hente informationer fra en database omhandlende bøgerne, filmene og andre relaterede medier for at give svar.
@@ -138,7 +138,7 @@ https://memgraph.com/blog/graph-algorithms-cheat-sheet-for-coding-interviews
 ## SQL database (MSSQL)
 Vi bruger SQL database til vores brugersystem, hvor vi også logger når en bruger logger ind eller ud af systemet. Disse funktioner er opdelt i to tables, users og user_log. 
 
-![Users ER diagram](./git_photos/users_er_db.JPG)
+![Users ER diagram](./git_photos/users_diagram.JPG)
 ![Users ER draw](./git_photos/users_draw.JPG)
 
 ### Opsætning af MSSQL database
