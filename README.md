@@ -82,6 +82,29 @@ Password: neo4j
 Vi bruger Diffbot til at transformere vores text data vi har hentet om til en graph. Vi har valgt at bruge det fordi det er hurtigere og nemmere end selv at skulle gennemgå de over 20000 dokumenter vi har hentet og lave noder og realationer. Dog ville det være bedst hvis vi selv gjorde det, da diffbot har nogle forud indstillinger som ikke er de bedste til vores text. Bla. kunne det være at vi havde brug for noder til besværgelser (fra bøgerne).
 
 ### graph schema
+Med graph schema kan vi danne os et overblik over de noder og relationships der er i vores graph database. 
+![Graph Schema](./git_photos/graphShema.png)
+Her kan vi se at der er følgende noder i databasen:
+- Person, 
+  - har en masse relationship til sig selv, spouse, Has_parrent, Sibling, Family_member, Romatic_instrest, Social_relation, Has_child, Work_relation. 
+  - Den har awards mod award. 
+  - Religion mod Religion. 
+  - Person_location og nationality mod country. 
+  - Geographic_heritage, place_of_death, place_of_birth, person_location mod Location
+  - Person_location, Educated_at, employee_or_member_of mod Organization
+  - intersted_in, author_of, field_of_work, contributed_to mod Skill
+- Organization
+    - Competitors, Organization_Locations, acquired_by, partnership mod sigselv 
+    - Founded_by mod Person
+    - Organization_locations mod Location
+    - Industry mod skill
+- Contry
+- Religion
+- Award
+- Location
+- Skill
+
+
 ### graph algoritmer 
 
 ## SQL database (MSSQL)
