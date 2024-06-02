@@ -21,7 +21,7 @@ conn = init_connection()
 
 ###Checks if the username and password match the database
 def check_login(username, password):
-    query = f"SELECT id FROM dbo.users WHERE username = '{username}' AND password = '{password}'"
+    query = f"EXEC login @Username = '{username}', @Password = '{password}'"
     with conn.cursor() as cur:
         res = cur.execute(query).fetchone()
         if res:
