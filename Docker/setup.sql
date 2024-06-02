@@ -69,14 +69,19 @@ CREATE PROCEDURE delete_user
 AS
 BEGIN
     BEGIN TRANSACTION;
-    
-    DELETE FROM user_logs
-    WHERE id = @Id;
+    BEGIN TRY
+        DELETE FROM user_logs
+        WHERE id = @Id;
 
-    DELETE FROM dbo.users
-    WHERE id = @Id;
+        DELETE FROM dbo.users
+        WHERE id = @Id;
 
-    COMMIT;
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH 
+        ROLLBACK TRANSACTION;
+        -- ERROR LOGGING
+    END CATCH
 END;
 GO
 
