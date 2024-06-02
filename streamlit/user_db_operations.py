@@ -61,10 +61,10 @@ def change_email(userid, email):
     with conn.cursor() as cur:
         return cur.execute(query)
     
-###Deletes the user from the database
+# Deletes the user from the database (from user- & user_logs table)
 def delete_user(userid):
     mdb.delete_chat_history(userid)
-    query = f"DELETE FROM dbo.users WHERE id = '{userid}'"
+    query = f"EXEC delete_user @Id = '{userid}'"
     with conn.cursor() as cur:
         return cur.execute(query)
 

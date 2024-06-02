@@ -6,7 +6,8 @@ import datetime
 # Uses st.cache_resource to only run once.
 @st.cache_resource
 def init_connection():
-    return pymongo.MongoClient("mongodb://localhost:27017/")
+    return pymongo.MongoClient("mongodb://localhost:27142")
+    # return pymongo.MongoClient("mongodb://localhost:27017/")
 
 client = init_connection()
 

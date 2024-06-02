@@ -51,7 +51,7 @@ BEGIN
 END;
 GO
 
--- Create usernaem check procedure
+-- Create username check procedure
 CREATE PROCEDURE username_check 
     @Username varchar(60)
 AS
@@ -59,6 +59,24 @@ BEGIN
     SELECT id
     FROM dbo.users
     WHERE username = @Username
+END;
+GO
+
+-- Create deleting user procedure (With Transaction)
+--    query = f"DELETE FROM dbo.users WHERE id = '{userid}'"
+CREATE PROCEDURE delete_user
+    @Id int
+AS
+BEGIN
+    BEGIN TRANSACTION;
+    
+    DELETE FROM user_logs
+    WHERE id = @Id;
+
+    DELETE FROM dbo.users
+    WHERE id = @Id;
+
+    COMMIT;
 END;
 GO
 
