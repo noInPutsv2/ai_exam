@@ -232,7 +232,7 @@ Vi bruger MongoDB version 7.0.
 - vi kan tilføje mere data til den gennem funktionen InsertChatHistory i /streamlit/MongoDB.py. Den bliver kaldt når chatbotten har svaret på et spørgsmål.
 - vi kan slette dataen for en specifik bruger med delete_chat_history i /streamlit/MongoDB.py. Den bliver kaldt når brugeren bliver slettet i bruger databasen.
 - vi har valgt ikke at have en update funtion da vi ikke mener at der skal kunne opdateres i chat historikken. 
-
+- Vi har lavet en aggregation pipeline til at kunne filtrer og lægge antallet af chats for en enkelte bruger sammen, den ligger i funktionen get_number_of_chats i /streamlit/MongoDB.py.
 
 
 # LLM
