@@ -11,7 +11,7 @@ def init_connection():
 
 client = init_connection()
 
-@st.cache_data(ttl=600)
+
 def GetChatHistory(userId):
     db = client.DB_Eksamen
     items = db.Chats.find({"user_id": userId})

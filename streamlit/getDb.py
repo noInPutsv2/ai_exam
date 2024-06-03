@@ -45,8 +45,10 @@ def ask_question(question):
     vectordb = get(embeddings)
     prompt = PromptTemplate.from_template(template)
     chain = RetrievalQA.from_chain_type(
-        llm,
-        retriever=vectordb.as_retriever(),
-        return_source_documents=True,
-        chain_type_kwargs={"prompt": prompt})
+    llm,
+    retriever=vectordb.as_retriever(
+    search_type="mmr",
+    search_kwargs={'k': 6, 'lambda_mult': 0.25}),
+    return_source_documents=True,
+    chain_type_kwargs={"prompt": prompt})
     return chain({"query": question})["result"]

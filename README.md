@@ -1,7 +1,7 @@
 # Database + AI eksamensprojekt
 ## Gruppemedlemmer
 * Benjamin Ritthidech Sommervoll (CPH-BS202)
-* Line Phoebe Wienke (*)
+* Line Phoebe Wienke (CPH-lw146)
 * Louise Sitting Estrup (CPH-LE115)
 
 ## Projektbeskrivelse
@@ -44,7 +44,7 @@ Den åbnes gennem cmd:
 streamlit run main.py --client.showSidebarNavigation=False
 ```
 ### sider
-Vores Streamlit app har tre sider:
+Vores Streamlit app har fire sider:
 - Main page hvor man kan logge ind og når man er logget ind har man adgang til chatbotten.
 - create user page hvor man kan oprette en ny bruger
 - update user page hvor man kan opdatere informationer når man er logget ind
@@ -114,33 +114,7 @@ Her kan vi se at der er følgende noder i databasen:
 
 
 ### graph algoritmer
-Optimizing search results by ordering them according to some heuristic.
-https://www.geeksforgeeks.org/greedy-algorithms/
-https://www.w3schools.com/dsa/dsa_ref_greedy.php
 
-String searching, such as finding occurrences of a word in a text document.
-https://www.geeksforgeeks.org/boyer-moore-algorithm-for-pattern-searching/
-
-Used to find strongly connected componenents 
-https://www.geeksforgeeks.org/strongly-connected-components/
-https://www.geeksforgeeks.org/connected-components-in-an-undirected-graph/
-
-Tarjan
-Used to find strongly connected componenents
-https://www.geeksforgeeks.org/tarjan-algorithm-find-strongly-connected-components/
-
-Kosaraju
-Used to find strongly connected componenents
-https://www.geeksforgeeks.org/connectivity-in-a-directed-graph/
-
-Breadth-first-Search
-BFS may be used to discover the locations nearest to a specific origin point.
-The BFS algorithm is used in peer-to-peer networks as a search technique to discover all neighboring nodes.
-BFS is used in web crawlers to build web page indexes. It starts at the source page and works its way through all of the links connected with it. Every web page is treated as a node in the network graph.
-https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/
-
-https://memgraph.com/blog/graph-algorithms-applications
-https://memgraph.com/blog/graph-algorithms-cheat-sheet-for-coding-interviews
 
 
 ## SQL database (MSSQL)
