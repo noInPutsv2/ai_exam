@@ -220,4 +220,29 @@ Vi bruger MongoDB version 7.0.
 - Vi har lavet en aggregation pipeline til at kunne filtrer og lægge antallet af chats for en enkelte bruger sammen, den ligger i funktionen get_number_of_chats i /streamlit/MongoDB.py.
 
 
-# LLM
+# AI
+## Problem statement 
+
+## Motivation 
+
+## Theoretical foundation
+### LLM
+
+### K-NN
+
+## Argumentation of choices
+
+## Design 
+
+## Data
+
+## Code
+
+## Artefacts 
+
+## Outcomes 
+
+## Implementation instructions
+Disclamier hvis man skal bruge chatbotton i streamlit appen skal man oprette databaserne til henholdsvis at kunne logge ind og haave chat historik, yderligere skal man hente dataen gennem notebooksne og konvatere det til vector og graph, hvilket tager sammenlagt et par døgn. 
+
+### Use of the chat bot
