@@ -1,4 +1,6 @@
 # Database + AI eksamensprojekt
+- [Databaser](#Databaser)
+- [AI](#ai)
 ## Gruppemedlemmer
 * Benjamin Ritthidech Sommervoll (CPH-BS202)
 * Line Phoebe Wienke (CPH-lw146)
@@ -246,5 +248,6 @@ Vi bruger MongoDB version 7.0.
 
 ## Implementation instructions
 Disclamier hvis man skal bruge chatbotton i streamlit appen skal man oprette databaserne til henholdsvis at kunne logge ind og haave chat historik, yderligere skal man hente dataen gennem notebooksne og konvatere det til vector og graph, hvilket tager sammenlagt et par døgn. 
+[Streamlit](#streamlit-app)
 
 ### Use of the chat bot
