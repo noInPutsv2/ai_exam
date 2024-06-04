@@ -114,7 +114,9 @@ Her kan vi se at der er følgende noder i databasen:
 
 
 ### graph algoritmer
+vi undersøgte grafen ved at prøve at finde ud af hvem der var i centrum, ved at kigge på personer og sociale relation, og fandt ud af at Harry Potter var den med flest relationer hvilket giver god mening.
 
+![Community Detection](./git_photos/comunity_detection.png)
 
 
 ## SQL database (MSSQL)
