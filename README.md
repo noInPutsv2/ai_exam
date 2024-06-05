@@ -226,13 +226,23 @@ Vi bruger MongoDB version 7.0.
 
 # AI
 ## Problem statement 
+Hvordan kan vi udvikle en chatbot som har viden om Harry Potter universet, således at brugere af vores side nemmere kan holde styr på Harry Potter universet?
 
 ## Motivation 
+At hjælpe fans af Harry Potter med at navigere seriens univers.
 
 ## Theoretical foundation
 ### LLM
+En large language model (LLM), er en type AI program, som er i stand til at genkende og generere tekst. Disse modeller er trænet med enorme datasæt, og bygger på machine learning gennem en type af neural network. 
+Large language models anvender deep learning, som er en type af machine learning, til at forstå hvordan karakterer, ord og sætninger fungerer. Dette indebære sandsynligheds analyse af ustruktureret data. Deep learning modellen kan så trænes til at genkende forskelle mellem dele af indhold uden indgriben fra en person. 
+Derefter udføreres der ydeligere træning for at raffinere modellen. 
+
+https://www.cloudflare.com/learning/ai/what-is-large-language-model/
 
 ### K-NN
+K-nearest neighbors (KNN), er en supervised machine learning metode, som kan anvendes til at håndtere klassifikation og regressionsproblemer. KNN er bl.a. anvendt til pattern recognition og data mining.
+
+https://www.geeksforgeeks.org/k-nearest-neighbours/
 
 ## Argumentation of choices
 
@@ -247,7 +257,7 @@ Vi bruger MongoDB version 7.0.
 ## Outcomes 
 
 ## Implementation instructions
-Disclamier hvis man skal bruge chatbotton i streamlit appen skal man oprette databaserne til henholdsvis at kunne logge ind og haave chat historik, yderligere skal man hente dataen gennem notebooksne og konvatere det til vector og graph, hvilket tager sammenlagt et par døgn. 
+Disclaimer: Hvis man skal bruge chatbotten i streamlit appen skal man oprette databaserne til henholdsvis at kunne logge ind og have chat historik. Yderligere skal man hente dataen gennem jupyter notebooks og konvertere det til vector og graph, hvilket tager sammenlagt et par døgn. 
 [Streamlit](#streamlit-app)
 
 ### Use of the chat bot
