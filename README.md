@@ -244,6 +244,28 @@ K-nearest neighbors (KNN), er en supervised machine learning metode, som kan anv
 
 https://www.geeksforgeeks.org/k-nearest-neighbours/
 
+### Valg af Model
+For at kunne køre vores chatbot læner vi os op ad en forudtrænet model, der kan hjælpe med at kunne forstå vores data. Vi har testet forskellige modeller for at finde den der passer bedst til vores projekt. En af vores krav var at den skulle kunne køre hurtigt, så derfor at vi lavet tidstest på de forskellige modeller, på en funktion til at hente og beabejde informationen fra databasen og på selve llm funktion. Vi har kørt igennem de forskellige modeller med samme spørgsmål og taget tid på dem. 
+
+Spørgsmålet vi stiller er "Who os Merope Gaunts son?", hvilket Tom Marvolo Riddle også kendt som Lord Voldemort.
+
+|Model|tid|svar|
+|---|---|---|
+|ChatOllama llama3| 1.45| I don't know the answer to this question. Thanks for asking!|
+|ChatOllama Mistral| 6.27| Merope Gaunt is the mother of Morfin Gaunt. There is no information provided about her children being referred to as "Meropes son." Thanks for asking|
+|ChatOllama tomasonjo/llama3-text2cypher-demo| 3.57| Merope Gaunt's son is Morfin Gaunt. Thanks for asking!|
+|Ollama Mistral| 8.76| Merop Gaunt is the mother of Morfin Gaunt. Therefore, Morfin is Merope's son.|
+|Ollama llama3| 8.99| I don't know the answer to that question because there is no information provided about Merope Gaunt's children. Thanks for asking!|
+
+|Model|tid|svar|
+|---|---|---|
+|ChatOllama llama3| 2.07| I don't know who Merope Gaunt's son is. Thanks for asking!|
+|ChatOllama Mistral| 5.85| Merope Gaunt is a character from the Harry Potter series, specifically mentioned in "Harry Potter and the Deathly Hallows," but she does not have a named son. She is the mother of Slytherin founder Salazar Slytherin and the paternal grandmother of Voldemort. Thanks for asking!|
+|ChatOllama tomasonjo/llama3-text2cypher-demo| 3.18| According to the context, Merope Gaunt's son is none other than Quentin Coldwater. Thanks for asking!|
+|Ollama Mistral| 13.60| Merope Gaunt is not known to have any recorded sons in the Harry Potter series by J.K. Rowling. She is primarily remembered for being one of the Gaunt family members, and specifically for her role in providing the Horcrux locket to Tom Riddle (later Voldemort) that contained a fragment of his soul. Thanks for asking!|
+|Ollama llama3| 13.60| I don't know the specific information about Merope Gaunt's family, but according to J.K. Rowling's Harry Potter series, Merope Gaunt is a witch and the mother of Morfin and Marvolo Gaunt. Morfin Gaunt is actually the father of Tom Riddle (later known as Lord Voldemort). Thanks for asking!|
+
+Som det kan ses var den hurtigste af dem llama3, så det er den vi vælger at arbejde med. Ud fra svarende var der ikke nogen som havde det korrekte svar, selv om nogle laver et link mellem Merope Gaunt og Tom Riddle, er det ikke det korrekte. Det er også en grund til at vi vælger llama3 da den her ikke laver hallusinationer. 
 ## Argumentation of choices
 
 ## Design 
