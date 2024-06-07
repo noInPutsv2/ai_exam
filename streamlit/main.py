@@ -1,9 +1,12 @@
 import streamlit as st # type: ignore
 from streamlit_option_menu import option_menu # type: ignore
-import login_elements as le
+#import login_elements as le
 from yaml.loader import SafeLoader # type: ignore
 import chatbot
 
+st.session_state['username'] = "test"
+st.session_state['userid'] = 1
+st.session_state['authentication_status'] = True
 
 if 'authentication_status' not in st.session_state:
             st.session_state['authentication_status'] = None
@@ -22,8 +25,8 @@ def reset():
 
 #choose avatar icon
 with st.sidebar:
-    if st.session_state["authentication_status"] is False or st.session_state["authentication_status"] is None:
-        le.login_form()
+    #if st.session_state["authentication_status"] is False or st.session_state["authentication_status"] is None:
+        #le.login_form()
     if st.session_state["authentication_status"] is True:
         selected = option_menu("Choose your house", ["Gryffindor", 'Slytherin', 'Hufflepuff', 'Ravenclaw'],  
                         menu_icon = 'house-heart', icons=['house', 'house', 'house', 'house'], default_index=3)
@@ -35,7 +38,7 @@ with st.sidebar:
             user = hufflepuff
         else:
             user = ravenclaw
-        le.logout()
+        #le.logout()
         if st.button("update user info"):
             st.switch_page("pages/update_user_page.py")
         st.button(label = "Clear conversation", on_click = reset)
