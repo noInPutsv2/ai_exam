@@ -244,6 +244,33 @@ K-nearest neighbors (KNN), er en supervised machine learning metode, som kan anv
 
 https://www.geeksforgeeks.org/k-nearest-neighbours/
 
+## Analysering af data
+Vi har forsøgt at gå lidt dybere i den data vi har i graph databasen. 
+### K-nearest neighbor
+For at gå lidt dybere ind i dataen, har vi forsøgt at lave clustering på Personerne i vores graph database. Dette ligger i Notebokken KNN i mappen ML metoder. 
+
+Vi hentede Personerne ind fra graphdatabasen hvor vi kiggede på de embeddings der ligger på noderne. Embeddingsne er lavet blev lavet ved at tage de propperties noderne har og lave dem om til vectore, hvilket vi gjorde for at kunne søge i dem og kunne stille spørgsmål til grafen. Det kan ses i "Harry potter chatbot get info from graph" notebooken. Vi valgte at bruge de her embeddings da de alligevel var lavet, og vi mente at det ville give et inblik af noderne.
+
+Vi starter med at opdele embeddingsne fra at ligge i en celle i vores DataFrame til at ligge i hver deres egne, hvilket giver 768 dimentioner. Da det ikke er muligt at plotte, bruger vi PCA til at samle dem ind til 2 dimentioner hvilket gør det muligt for os at visuelt kunne se i et scatter plot. 
+
+For at danne os et overblik over antallet af clusters vi skal have, laver vi et elbow diagram, som skulle vise os antallet af clusters i knækket på den nedad gående kurve. På vores ligner det at den knækker på 2.
+
+![Elbow diagram](./git_photos/elbow_diagram.png)
+
+For at bekræfte at den ligger på 2 clusters, laver vi en silhouette score, som med et peak skulle vise det idelle antal af clusters. Her er vores højest ved 2 så det bekræfter os i at vi skal have 2 clusters.
+
+![silhouette score](./git_photos/Silhouette_score.png)
+
+Vi prøver så at illustrer de 2 clusters for at få et visuelt billede af det.
+
+![2 clusters](./git_photos/2_clusters.png)
+
+Vi er ikke helt tilfredse med hvordan vores clusters ser ud, og vælger derfor at prøve at lave det igen med 3 clusters.
+
+![3 Clusters](./git_photos/3_clusters.png)
+Vi mener at det ser bedre og mere rigtigt ud, og derfor går ud fra at der her er 3 clusters. Det er så her at det går op for os at vi faktisk ikke ved eller kan gætte os til hvad disse clusters indeler personerne i. Vi ved bare at vi kan indele personerne i 3 clusters.
+
+## Large L M
 ### Valg af Model
 For at kunne køre vores chatbot læner vi os op ad en forudtrænet model, der kan hjælpe med at kunne forstå vores data. Vi har testet forskellige modeller for at finde den der passer bedst til vores projekt. En af vores krav var at den skulle kunne køre hurtigt, så derfor at vi lavet tidstest på de forskellige modeller, på en funktion til at hente og beabejde informationen fra databasen og på selve llm funktion. Vi har kørt igennem de forskellige modeller med samme spørgsmål og taget tid på dem. 
 
@@ -266,6 +293,9 @@ Spørgsmålet vi stiller er "Who os Merope Gaunts son?", hvilket Tom Marvolo Rid
 |Ollama llama3| 13.60| I don't know the specific information about Merope Gaunt's family, but according to J.K. Rowling's Harry Potter series, Merope Gaunt is a witch and the mother of Morfin and Marvolo Gaunt. Morfin Gaunt is actually the father of Tom Riddle (later known as Lord Voldemort). Thanks for asking!|
 
 Som det kan ses var den hurtigste af dem llama3, så det er den vi vælger at arbejde med. Ud fra svarende var der ikke nogen som havde det korrekte svar, selv om nogle laver et link mellem Merope Gaunt og Tom Riddle, er det ikke det korrekte. Det er også en grund til at vi vælger llama3 da den her ikke laver hallusinationer. 
+
+
+
 ## Argumentation of choices
 
 ## Design 
