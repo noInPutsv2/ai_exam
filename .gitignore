@@ -10,3 +10,7 @@
 *.txt
 /ML Metoder/.ipynb_checkpoints
 *.mp4
+/.ipynb_checkpoints
+/__pycache__
+/data
+/streamlit/__pycache__
