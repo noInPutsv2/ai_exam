@@ -1,4 +1,5 @@
 # Database + AI eksamensprojekt
+- [Intro](#database--ai-eksamensprojekt)
 - [Databaser](#Databaser)
 - [AI](#ai)
 ## Gruppemedlemmer
@@ -37,7 +38,7 @@ Formålet med dette projekt er at skabe en chatbot, der er i stand til at besvar
 
 
 ## Henting af Harry Potter data
-Vi henter al vores data omkring Harry Potter og universet fra denne side: https://harrypotter.fandom.com/wiki/Main_Page. Her starter vi med at gå ind på siderne omkrig de syv (main) bøger og derfra tager info om dem, samt alle links på de sider, hvorefter vi går ind på de link tager information om de sider plus links vi ikke alledrede har i forvejen. Dette bliver gjort i Harry_Potter_chatbot_get_info notebooken hvor funtioner til at hente fra siderne ligger i myloadlib.py. Efter at have hentet i ukendt tid, fik vi en connection error men valgt at vi havde nok info med de 21996 dokumenter vi havde hentet. Alle dokumenterne bliver lagt i en jsonl film, som ligger under data mappen men ikke på github da den fylder over 100Mb, her kan de så blive brugt i andre notebooks.
+Vi henter al vores data omkring Harry Potter og universet fra denne side: https://harrypotter.fandom.com/wiki/Main_Page. Her starter vi med at gå ind på siderne omkrig de syv (main) bøger og derfra tager info om dem, samt alle links på de sider, hvorefter vi går ind på de link tager information om de sider plus links vi ikke alledrede har i forvejen. Dette bliver gjort i Harry_Potter_chatbot_get_info notebooken hvor funtioner til at hente fra siderne ligger i myloadlib.py. Efter at have hentet i ukendt tid, fik vi en connection error men valgt at vi havde nok info med de 21996 dokumenter vi havde hentet. Alle dokumenterne bliver lagt i en jsonl fil, som ligger under data mappen men ikke på github da den fylder over 100Mb, her kan de så blive brugt i andre notebooks.
 
 ## Streamlit app
 For at vise vores chatbot og dens funktioner har vi lavet en frontend med Streamlit.
@@ -245,9 +246,11 @@ K-nearest neighbors (KNN), er en supervised machine learning metode, som kan anv
 https://www.geeksforgeeks.org/k-nearest-neighbours/
 
 ## Analysering af data
-Vi har forsøgt at gå lidt dybere i den data vi har i graph databasen. 
-### K-nearest neighbor
-For at gå lidt dybere ind i dataen, har vi forsøgt at lave clustering på Personerne i vores graph database. Dette ligger i Notebokken KNN i mappen ML metoder. 
+Vi har hentet en masse data omkring [Harry Potter](#henting-af-harry-potter-data)
+Dette data er blevet lagt i en vector database, og i en Graph database (med hjælp af [diffbot](#transformere-til-graph)).
+
+### Clustering og K-nearest neighbor
+For at gå lidt dybere ind i dataen, har vi forsøgt at lave clustering på Personerne i vores graph database. Dette ligger i [Notebokken KNN](/ML%20Metoder/KNN.ipynb) i mappen ML metoder. 
 
 Vi hentede Personerne ind fra graphdatabasen hvor vi kiggede på de embeddings der ligger på noderne. Embeddingsne er lavet blev lavet ved at tage de propperties noderne har og lave dem om til vectore, hvilket vi gjorde for at kunne søge i dem og kunne stille spørgsmål til grafen. Det kan ses i "Harry potter chatbot get info from graph" notebooken. Vi valgte at bruge de her embeddings da de alligevel var lavet, og vi mente at det ville give et inblik af noderne.
 
@@ -270,12 +273,49 @@ Vi er ikke helt tilfredse med hvordan vores clusters ser ud, og vælger derfor a
 ![3 Clusters](./git_photos/3_clusters.png)
 Vi mener at det ser bedre og mere rigtigt ud, og derfor går ud fra at der her er 3 clusters. Det er så her at det går op for os at vi faktisk ikke ved eller kan gætte os til hvad disse clusters indeler personerne i. Vi ved bare at vi kan indele personerne i 3 clusters.
 
-## Large L M
+### Clasification 
+Da vores forsøg med clustering ikke gik super godt, valgte vi at forsøge med supervised learning og clasification i stedet for. En interssant viden om Personerne i Harry Potter universet er om de er gode eller onde. Det var desværre ikke noget Diffbot havde med i dens overvejelser og kunne sætte på som node properties. Vi kunne godt tænke os at at se om den kan predicte ud fra embeddingsne om de er gode eller onde. Dette laver vi i [Prediction Notebook](/ML%20Metoder/Prediction.ipynb). Da vi kun er intersseret i om de er gode eller onde laver vi en binær clasification. 
+
+Vi starter med at inhente personerne fra grafen, hvor vi derefter gemmer og ligger det ind i excel, så vi manuelt kan sætte labeles på om de er gode, onde, rigtige eller en ting. Selv om vi her bliver nød til at skrive på om de er gode eller onde, ville vi fremad rettet kunne bruge den, i tilfælde af at der skulle komme nye personer, som den så selv ville kunne indele. Herefter filtere vi dem og fjerne de rigtige personer og dem der er ting, så vi kan lave binær classification på det.
+
+Vi indeler det i trænings og test sæt. Normalt ville man indele det i 80/20 hvor 80% er træning og 20% er test, men da vi kun har 422 personer, hvilket er et meget lille datasæt, har vi ændret trænings forholdene til at være 50/50 så 50% til hver. Dette giver det en chace for at kunne lave predictions. 
+
+#### Confusion Matrix
+Måden vi ser hvor godt clasificationen gik er med en confusion matrix. Confusion Matrix virker ved at man opdeler det i predicted og actual, og om det er positive eller negative. Dette giver fire felter "True Negative", "False Negative", "False Positive" og "True Positive". 
+- True Negative, er hvor det er blevet predictied til at være negativ og rent fatisk er negativt.
+- False Negative, er hvor det er blevet predictied til at være negativ, men det er positivt
+- False Positive, er hvor det er blevet predictied til at være positiv men realt er det negativt.
+- True Positive, er hvor det er blevet predictied til at være positiv, og det er positivt. 
+
+![Confusion Matrix](/git_photos/Confusion_matrix.png)
+
+#### Decision Tree
+Decision tree er en supervised learning algorithm, der kan bruges til at forudsige et resultat baseret på det input det for ind. Decision Trees kan både bruges til at løse regression og classification problemer, hvor vi her bruger den til classification.
+
+Vi køre moddelen på vores træningssæt, og derefter tester det på testsættet, hvor vi laver en confusion matrix, som ser således ud:
+
+![Decision tree result](/git_photos/results/decision_tree.png)
+
+Her kan vi se at den har 6 true negative og 166 true positive, hvilket vil sige at den samlet har gættet rigtigt 172 gange, og samlet 39 gange forkert ud af 211, hvilket er en okay fordeling.
+#### K-Nearst Neighbors
+
+#### SVM classifier
+
+Det sjove her er at den fik en masse korrekte, ved kun at vælge positiv. Vi gætter os til at her er positiv "god", da vi ved at der er flere gode end onde personer. Derfor ser det ud som om at den labler alle personerne som værende god, hvilket er en god feature havde det været et menneske, der ser det gode i alle, men det er knap så god en feature for en klassifikation model, selv om det her giver en okay sucess rate. 
+
+![SVM Result](/git_photos/results/SVM.png)
+
+Som det kan ses på billede (øverst) så har den en sucess rate på 84%, hvilket er en okay rate. 
+
+#### Naive Bayes classifier
+![Naive bayes result](/git_photos/results/Naive_Bayes.png)
+
+## Large Language Models
 ### Valg af Model
 For at kunne køre vores chatbot læner vi os op ad en forudtrænet model, der kan hjælpe med at kunne forstå vores data. Vi har testet forskellige modeller for at finde den der passer bedst til vores projekt. En af vores krav var at den skulle kunne køre hurtigt, så derfor at vi lavet tidstest på de forskellige modeller, på en funktion til at hente og beabejde informationen fra databasen og på selve llm funktion. Vi har kørt igennem de forskellige modeller med samme spørgsmål og taget tid på dem. 
 
 Spørgsmålet vi stiller er "Who os Merope Gaunts son?", hvilket Tom Marvolo Riddle også kendt som Lord Voldemort.
-
+#### Graph
 |Model|tid|svar|
 |---|---|---|
 |ChatOllama llama3| 1.45| I don't know the answer to this question. Thanks for asking!|
@@ -284,6 +324,7 @@ Spørgsmålet vi stiller er "Who os Merope Gaunts son?", hvilket Tom Marvolo Rid
 |Ollama Mistral| 8.76| Merop Gaunt is the mother of Morfin Gaunt. Therefore, Morfin is Merope's son.|
 |Ollama llama3| 8.99| I don't know the answer to that question because there is no information provided about Merope Gaunt's children. Thanks for asking!|
 
+#### Vector
 |Model|tid|svar|
 |---|---|---|
 |ChatOllama llama3| 2.07| I don't know who Merope Gaunt's son is. Thanks for asking!|
@@ -309,7 +350,9 @@ Som det kan ses var den hurtigste af dem llama3, så det er den vi vælger at ar
 ## Outcomes 
 
 ## Implementation instructions
-Disclaimer: Hvis man skal bruge chatbotten i streamlit appen skal man oprette databaserne til henholdsvis at kunne logge ind og have chat historik. Yderligere skal man hente dataen gennem jupyter notebooks og konvertere det til vector og graph, hvilket tager sammenlagt et par døgn. 
+:warning: Disclaimer: Hvis man skal bruge chatbotten i streamlit appen skal man oprette databaserne til henholdsvis at kunne logge ind og have chat historik. Yderligere skal man hente dataen gennem jupyter notebooks og konvertere det til vector og graph, hvilket tager sammenlagt et par døgn. 
+
+:warning: Disclaimer: For AI-delen af projektet er Login i streamlit er blevet disabled, for at man ikke skal have SQL server kørerne.
 [Streamlit](#streamlit-app)
 
 ### Use of the chat bot
