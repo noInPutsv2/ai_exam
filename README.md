@@ -230,7 +230,15 @@ Vi bruger MongoDB version 7.0.
 Hvordan kan vi udvikle en chatbot som har viden om Harry Potter universet, således at brugere af vores side nemmere kan holde styr på Harry Potter universet?
 
 ## Motivation 
-At hjælpe fans af Harry Potter med at navigere seriens univers.
+At hjælpe fans af Harry Potter med at navigere seriens univers, ved at de kan stille en chatbot om spørgsmål der relaterer til Harry Potter universet. Folk i litteratur branchen kan også bruge vores hjemmeside til at  foretage research fx ift. at skrive nyt materiale eller at drage inspiration fra serien.
+Vi ville gerne udvikle en chatbot i forbindelse med at vi skulle arbejde på vores eksamensprojekt. Vi valgte at fokusere på et bestemt emne, for at indskrænke projektets scope, og bedre definere projektet. 
+Det var Lines idé at fokusere specifikt på Harry Potter, da hun er stor fan af serien.
+
+## Research Questions
+1. Kan vi træne en ml model til at svare på spørgsmål om harry potter?
+2. Hvordan kan vi indsamle data om Harry Potter til en chatbot?
+3. Hvordan kan vi sikre at chatbotten leverer korrekte svar?
+
 
 ## Theoretical foundation
 ### LLM
