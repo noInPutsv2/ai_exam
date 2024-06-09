@@ -1,13 +1,13 @@
+import time
+import streamlit as st
+from langchain.vectorstores import Chroma
+from langchain.embeddings import HuggingFaceEmbeddings
+from langchain_community.chat_models import ChatOllama
+from langchain.chains import RetrievalQA
+from langchain.prompts import PromptTemplate
+from langchain.vectorstores.neo4j_vector import Neo4jVector
 
-from langchain_community.vectorstores import Chroma # type: ignore
-from langchain.callbacks.manager import CallbackManager # type: ignore
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler # type: ignore
-from langchain_community.embeddings import HuggingFaceEmbeddings # type: ignore
-from langchain_community.llms import Ollama # type: ignore
-from langchain.chains import RetrievalQA # type: ignore
-from langchain.prompts import PromptTemplate # type: ignore
-
-
+### Embeddings
 model_name = "sentence-transformers/all-mpnet-base-v2"
 model_kwargs = {'device': 'cpu'}
 encode_kwargs = {'normalize_embeddings': False}
@@ -17,18 +17,20 @@ embeddings = HuggingFaceEmbeddings(
     model_kwargs=model_kwargs,
     encode_kwargs=encode_kwargs
 )
+### Get data
+vectordb = Chroma(persist_directory = "../data/Chroma/", collection_name= "Harry_Potter", embedding_function = embeddings)
+vector_index = Neo4jVector.from_existing_graph(
+    embeddings,
+    url=st.secrets.Neo4j["url"],
+    username=st.secrets.Neo4j["username"],
+    password=st.secrets.Neo4j["password"],
+    index_name='persons',
+    node_label=["Person", 'Location', 'Skill', 'Organization', 'Award', "Country", 'Religion' ],
+    text_node_properties=['name', "positionHeld", "causeOfDeath", "dateOfBirth", "numberOfChildren", "academicDegree", "dateOfDeath", "age", "productType", "foundingDate" ],
+    embedding_node_property='embedding',
+)
 
-vectordb = ()
-
-def get(embedding_function):
-    db = Chroma(persist_directory = 'data/chroma/', embedding_function = embedding_function)
-    return db
-
-
-def getDb():
-    vectordb = get(embeddings)
-
-llm = Ollama(model="mistral", callback_manager = CallbackManager([StreamingStdOutCallbackHandler()]))
+llm = ChatOllama(model="llama3")
 
 template = """Use the following pieces of context to answer the question at the end. 
 If you don't know the answer, just say that you don't know, don't try to make up an answer. 
@@ -41,14 +43,21 @@ Question: {question}
 
 Helpful Answer:
 """
-def ask_question(question):
-    vectordb = get(embeddings)
-    prompt = PromptTemplate.from_template(template)
-    chain = RetrievalQA.from_chain_type(
+prompt = PromptTemplate.from_template(template)
+
+vector_qa = RetrievalQA.from_chain_type(
+    llm=llm,
+    chain_type="stuff",
+    retriever=vector_index.as_retriever(),
+    chain_type_kwargs={"prompt": prompt}
+)
+
+chain = RetrievalQA.from_chain_type(
     llm,
-    retriever=vectordb.as_retriever(
-    search_type="mmr",
-    search_kwargs={'k': 6, 'lambda_mult': 0.25}),
+    retriever=vectordb.as_retriever(),
     return_source_documents=True,
     chain_type_kwargs={"prompt": prompt})
-    return chain({"query": question})["result"]
+
+def ask_question(question):
+    result = chain.invoke({"query": question, "context": vector_qa.invoke(question)})
+    return result["result"]

@@ -9,6 +9,10 @@ def makeChatHistory(items, user, assistent):
         st.session_state.messages.append({"role": "user", "avatar": user, "content": i["user_input"]})
         st.session_state.messages.append({"role": "assistant", "avatar": assistent, "content": i["chatbot_response"]})
 
+def stream_text(text):
+    for word in text.split(" "):
+        yield word + " "
+        time.sleep(0.2)
 
 def Show(user, assistent):
     # Set page title
@@ -39,8 +43,12 @@ def Show(user, assistent):
         st.session_state.messages.append({"role": "user", "avatar": user , "content": prompt})
 
         with st.chat_message("assistant"):
-            response = getDb.ask_question(prompt)
-            st.write(response)
+            with st.spinner("I'm thinking..."):
+                start = time.time()
+                response = getDb.ask_question(prompt)
+                end = time.time()
+            st.write_stream(stream_text(str(response)))
         # Add assistant response to chat history
         st.session_state.messages.append({"role": "assistant", "avatar": assistent,  "content": response})
-        mdb.InsertChatHistory(st.session_state['userid'], prompt, response)
+        times = (end - start)/60
+        mdb.InsertChatHistory(st.session_state['userid'], prompt, response, times)
