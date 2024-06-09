@@ -248,10 +248,6 @@ Derefter udføreres der ydeligere træning for at raffinere modellen.
 
 https://www.cloudflare.com/learning/ai/what-is-large-language-model/
 
-### K-NN
-K-nearest neighbors (KNN), er en supervised machine learning metode, som kan anvendes til at håndtere klassifikation og regressionsproblemer. KNN er bl.a. anvendt til pattern recognition og data mining.
-
-https://www.geeksforgeeks.org/k-nearest-neighbours/
 
 ## Analysering af data
 Vi har hentet en masse data omkring [Harry Potter](#henting-af-harry-potter-data)
@@ -305,7 +301,12 @@ Vi køre moddelen på vores træningssæt, og derefter tester det på testsætte
 ![Decision tree result](/git_photos/results/decision_tree.png)
 
 Her kan vi se at den har 6 true negative og 166 true positive, hvilket vil sige at den samlet har gættet rigtigt 172 gange, og samlet 39 gange forkert ud af 211, hvilket er en okay fordeling.
-#### K-Nearst Neighbors
+#### K-Nearest Neighbors
+K-nearest neighbors (KNN), er en machine learning metode, som kan anvendes til at håndtere klassifikation og regressionsproblemer. KNN er bl.a. anvendt til pattern recognition og data mining. Unsupervised KNN er fundament for andre metoder såsom manifold learning og spectral clusters. 
+
+https://www.geeksforgeeks.org/k-nearest-neighbours/
+https://scikit-learn.org/stable/modules/neighbors.html
+
 
 #### SVM classifier
 
@@ -322,7 +323,7 @@ Som det kan ses på billede (øverst) så har den en sucess rate på 84%, hvilke
 ### Valg af Model
 For at kunne køre vores chatbot læner vi os op ad en forudtrænet model, der kan hjælpe med at kunne forstå vores data. Vi har testet forskellige modeller for at finde den der passer bedst til vores projekt. En af vores krav var at den skulle kunne køre hurtigt, så derfor at vi lavet tidstest på de forskellige modeller, på en funktion til at hente og beabejde informationen fra databasen og på selve llm funktion. Vi har kørt igennem de forskellige modeller med samme spørgsmål og taget tid på dem. 
 
-Spørgsmålet vi stiller er "Who os Merope Gaunts son?", hvilket Tom Marvolo Riddle også kendt som Lord Voldemort.
+Spørgsmålet vi stiller er "Who os Merope Gaunts son?", hvilket er Tom Marvolo Riddle også kendt som Lord Voldemort.
 #### Graph
 |Model|tid|svar|
 |---|---|---|
@@ -341,9 +342,17 @@ Spørgsmålet vi stiller er "Who os Merope Gaunts son?", hvilket Tom Marvolo Rid
 |Ollama Mistral| 13.60| Merope Gaunt is not known to have any recorded sons in the Harry Potter series by J.K. Rowling. She is primarily remembered for being one of the Gaunt family members, and specifically for her role in providing the Horcrux locket to Tom Riddle (later Voldemort) that contained a fragment of his soul. Thanks for asking!|
 |Ollama llama3| 13.60| I don't know the specific information about Merope Gaunt's family, but according to J.K. Rowling's Harry Potter series, Merope Gaunt is a witch and the mother of Morfin and Marvolo Gaunt. Morfin Gaunt is actually the father of Tom Riddle (later known as Lord Voldemort). Thanks for asking!|
 
-Som det kan ses var den hurtigste af dem llama3, så det er den vi vælger at arbejde med. Ud fra svarende var der ikke nogen som havde det korrekte svar, selv om nogle laver et link mellem Merope Gaunt og Tom Riddle, er det ikke det korrekte. Det er også en grund til at vi vælger llama3 da den her ikke laver hallusinationer. 
+Som det kan ses var den hurtigste af dem llama3, så det er den vi vælger at arbejde med. Ud fra svarene var der ikke nogen som havde det korrekte svar, selv om nogle laver et link mellem Merope Gaunt og Tom Riddle, er det ikke det korrekte. Det er også en grund til at vi vælger llama3 da den her ikke laver hallucinationer. 
 
+#### Ollama
+Ollama er en open-source platform som kan bruges til at køre LLMs på en lokal maskine. Den indeholder et library af forskellige modeller både til generelt brug samt mere specialiserede modeller. Den indeholder en lokal API som giver kommunikation mellem applikationen og LLM, således at man kan sende prompts og få svar tilbage. Det er også at tilpasse konfigurationerne, således at man har flere muligheder når man arbejder med modellerne
 
+https://medium.com/@1kg/ollama-what-is-ollama-9f73f3eafa8b
+#### Llama3
+Llama3 er en serie af modeller som er udviklet af Meta Inc. som kan bruges enten pre-trained eller instruction-tuned.
+Instruction-Tuned er optimiseret til dialog/chat brug, hvorimod pre-trained er basis-modellen. 
+
+https://ollama.com/library/llama3
 
 ## Argumentation of choices
 
