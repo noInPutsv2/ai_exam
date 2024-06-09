@@ -42,6 +42,8 @@ with st.sidebar:
         if st.button("update user info"):
             st.switch_page("pages/update_user_page.py")
         st.button(label = "Clear conversation", on_click = reset)
+        if st.button("Statistics"):
+            st.switch_page("pages/Statistics_page.py")
     
     
 
