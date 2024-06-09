@@ -227,7 +227,7 @@ Vi bruger MongoDB version 7.0.
 
 # AI
 ## Problem statement 
-Hvordan kan vi udvikle en chatbot som har viden om Harry Potter universet, således at brugere af vores side nemmere kan holde styr på Harry Potter universet?
+Hvordan kan vi udvikle en chatbot som kan svare på spørgsmål om Harry Potter universet, således at brugere af vores side nemmere kan få information omkring Harry Potter universet?
 
 ## Motivation 
 At hjælpe fans af Harry Potter med at navigere seriens univers, ved at de kan stille en chatbot om spørgsmål der relaterer til Harry Potter universet. Folk i litteratur branchen kan også bruge vores hjemmeside til at  foretage research fx ift. at skrive nyt materiale eller at drage inspiration fra serien.
@@ -297,7 +297,7 @@ Vi er ikke helt tilfredse med hvordan vores clusters ser ud, og vælger derfor a
 ![3 Clusters](./git_photos/3_clusters.png)
 Vi mener at det ser bedre og mere rigtigt ud, og derfor går ud fra at der her er 3 clusters. Det er så her at det går op for os at vi faktisk ikke ved eller kan gætte os til hvad disse clusters indeler personerne i. Vi ved bare at vi kan indele personerne i 3 clusters.
 
-### Clasification 
+### Classification 
 Da vores forsøg med clustering ikke gik super godt, valgte vi at forsøge med supervised learning og clasification i stedet for. En interssant viden om Personerne i Harry Potter universet er om de er gode eller onde. Det var desværre ikke noget Diffbot havde med i dens overvejelser og kunne sætte på som node properties. Vi kunne godt tænke os at at se om den kan predicte ud fra embeddingsne om de er gode eller onde. Dette laver vi i [Prediction Notebook](/ML%20Metoder/Prediction.ipynb). Da vi kun er intersseret i om de er gode eller onde laver vi en binær clasification. 
 
 Vi starter med at inhente personerne fra grafen, hvor vi derefter gemmer og ligger det ind i excel, så vi manuelt kan sætte labeles på om de er gode, onde, rigtige eller en ting. Selv om vi her bliver nød til at skrive på om de er gode eller onde, ville vi fremad rettet kunne bruge den, i tilfælde af at der skulle komme nye personer, som den så selv ville kunne indele. Herefter filtere vi dem og fjerne de rigtige personer og dem der er ting, så vi kan lave binær classification på det.
