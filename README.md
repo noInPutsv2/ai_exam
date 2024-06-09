@@ -38,7 +38,7 @@ Formålet med dette projekt er at skabe en chatbot, der er i stand til at besvar
 
 
 ## Henting af Harry Potter data
-Vi henter al vores data omkring Harry Potter og universet fra denne side: https://harrypotter.fandom.com/wiki/Main_Page. Her starter vi med at gå ind på siderne omkrig de syv (main) bøger og derfra tager info om dem, samt alle links på de sider, hvorefter vi går ind på de link tager information om de sider plus links vi ikke alledrede har i forvejen. Dette bliver gjort i Harry_Potter_chatbot_get_info notebooken hvor funtioner til at hente fra siderne ligger i myloadlib.py. Efter at have hentet i ukendt tid, fik vi en connection error men valgt at vi havde nok info med de 21996 dokumenter vi havde hentet. Alle dokumenterne bliver lagt i en jsonl fil, som ligger under data mappen men ikke på github da den fylder over 100Mb, her kan de så blive brugt i andre notebooks.
+Vi henter al vores data omkring Harry Potter og universet fra denne side: https://harrypotter.fandom.com/wiki/Main_Page. Her starter vi med at gå ind på siderne omkrig de syv (main) bøger og derfra tager info om dem, samt alle links på de sider, hvorefter vi går ind på de link tager information om de sider plus links vi ikke alledrede har i forvejen. Dette bliver gjort i [Harry_Potter_chatbot_get_info notebooken](Harry_potter_chatbot_get_info.ipynb) hvor funtioner til at hente fra siderne ligger i myloadlib.py. Efter at have hentet i ukendt tid, fik vi en connection error men valgt at vi havde nok info med de 21996 dokumenter vi havde hentet. Alle dokumenterne bliver lagt i en jsonl fil, som ligger under data mappen men ikke på github da den fylder over 100Mb, her kan de så blive brugt i andre notebooks.
 
 ## Streamlit app
 For at vise vores chatbot og dens funktioner har vi lavet en frontend med Streamlit.
@@ -235,24 +235,44 @@ Vi ville gerne udvikle en chatbot i forbindelse med at vi skulle arbejde på vor
 Det var Lines idé at fokusere specifikt på Harry Potter, da hun er stor fan af serien.
 
 ## Research Questions
-1. Kan vi træne en ml model til at svare på spørgsmål om harry potter?
+1. Kan vi træne en large launge model til at svare på spørgsmål om harry potter?
 2. Hvordan kan vi indsamle data om Harry Potter til en chatbot?
 3. Hvordan kan vi sikre at chatbotten leverer korrekte svar?
 
+## Prosessen 
+Her er et kort over prosessen af hvad der sker i vores projekt.
+### Henting af data
+Hele processen starter med at vi skal bruge noget data. Vi har hentet en masse data omkring [Harry Potter](#henting-af-harry-potter-data). Hele denne data hentning sker i [Get info](Harry_potter_chatbot_get_info.ipynb) Notebooken. Alt dette data bliver gemt i en Jsonl fil, for at vi kan bruge det i andre notebooks
+### Gemmning i Databaser
+Når vi har hente alt det data, gemmer vi det i databaser.
+#### Vector databasen
+Vi gemmer alt dataen i en vector database, vi bruger Chroma. Det sker i [Store in Vector DB](Harry_potter_chatbot_store_vector_DB.ipynb) Notebooken. 
+##### Chunkning 
+Inden vi gemmer det i databser forbereder vi det, ved at undersøge det, men også ved at opdele det i chunks, så LLM'en bedre kan benytte sig af dem. 
+#### graf databasen
+Vi ligger det også dataen i en Graph database i [convert_to_graph](Harry_potter_chatbot_Conert_to_graph.ipynb) notebooken (med hjælp af [diffbot](#transformere-til-graph)) til at transformere dataen til noder og realationships.
+### Analyse af data
+Vi kigger på dataen i [Store in Vector DB](Harry_potter_chatbot_store_vector_DB.ipynb). Vi forsøger også om vi kan forbedre indholdet i graf databasen ved at bruge Machine learning teknikker, både med [clustering](#clustering-og-k-nearest-neighbor) i [KNN](/ML%20Metoder/KNN.ipynb) Notebokken og ved [clasification](#clasification) i [Prediction](/ML%20Metoder/Prediction.ipynb) Notebooken. 
 
-## Theoretical foundation
-### LLM
-En large language model (LLM), er en type AI program, som er i stand til at genkende og generere tekst. Disse modeller er trænet med enorme datasæt, og bygger på machine learning gennem en type af neural network. 
-Large language models anvender deep learning, som er en type af machine learning, til at forstå hvordan karakterer, ord og sætninger fungerer. Dette indebære sandsynligheds analyse af ustruktureret data. Deep learning modellen kan så trænes til at genkende forskelle mellem dele af indhold uden indgriben fra en person. 
-Derefter udføreres der ydeligere træning for at raffinere modellen. 
-
-https://www.cloudflare.com/learning/ai/what-is-large-language-model/
-
+### Hentning af svar fra databaser
+For at kunne lave en chatbot bliver vi også nødt til at stille nogle spørgsmål og få nogle svar fra databaserne. Dette gør vi både med og uden brug af [LLM](#large-language-models).
+#### Vector databasen
+I [LLM](Harry_potter_chatbot_LLM.ipynb) Notebooken tester vi metoder til at stille spørgsmål til vectordatabasen. Det er også i denne notebook vi køre vores test spørgsmål som vi registere i en document database. 
+#### Graf databasen
+I [Get info from graph](Harry%20potter%20chatbot%20get%20info%20from%20graph.ipynb) Notebooken tester vi metoder til at stille spørgsmål til grafdatabasen. Det er også i denne notebook vi køre vores test spørgsmål som vi registere i en document database. 
+### Kombination af databaser
+Da vi har to databaser der kan bidrage med forskellige ting, skal vi udnytte det. Derfor skal vi have kombineret svarende fra databaserne, dette tester vi i [LLM combined](Harry_Potter_chatbot_LLM_combined.ipynb) notebooken.
+### Streamlit
+Efter at have testet det i notebookene, kan vi lave det lidt mere tilgængelidt ved at lave en front-end til det. Front-enden bliver lavet med streamlit, hvor det hele ligger i mappen streamlit. Funktioner til chatbotten ligger i [chatbot.py](/streamlit/chatbot.py). 
+### Analyse af svar
+Efter at have testet chatbotten med vores test spørgsmål, laver vi statesik på resultaterne. Da vi gennemer svarende på test spørgsmålene i en document database, laver vi queries på den få at få resultater, og viser det på en siden [statistic_page.py](/streamlit/pages/Statistics_page.py) i vores streamlit app. Queriesne sker i [MongoDB.py](/streamlit/MongoDB.py).
 
 ## Analysering af data
-Vi har hentet en masse data omkring [Harry Potter](#henting-af-harry-potter-data)
-Dette data er blevet lagt i en vector database, og i en Graph database (med hjælp af [diffbot](#transformere-til-graph)).
 
+### Undersøgelse af data
+I [Store I vector DB](Harry_potter_chatbot_store_vector_DB.ipynb) notebooken, undersøger vi kort den data som vi får ind i databaserne. Efter vi har opdelt det i chunks, ligger vi det ind i et dataframe, for at kunne kigge lidt bedre på det. Dataen kan være lidt svær at læse, da den indeholder en masse newline (\n). Vi vælger ikke at gøre så meget ved dataen, da vi ved at LLM'en godt selv kan filtere i det. Dog har vi lavet en Word cloud for at se at dataen ser rigtig ud. 
+
+![word cloud](/git_photos/wordcloud.png)
 ### Clustering og K-nearest neighbor
 For at gå lidt dybere ind i dataen, har vi forsøgt at lave clustering på Personerne i vores graph database. Dette ligger i [Notebokken KNN](/ML%20Metoder/KNN.ipynb) i mappen ML metoder. 
 
@@ -307,8 +327,10 @@ K-nearest neighbors (KNN), er en machine learning metode, som kan anvendes til a
 https://www.geeksforgeeks.org/k-nearest-neighbours/
 https://scikit-learn.org/stable/modules/neighbors.html
 
+![KNN result](/git_photos/results/kNN.png)
 
 #### SVM classifier
+Supporrt Vector Machine er en kraftig Machine learning algorithm, der kan bruges til både at lave linær og non linær clasfication.  
 
 Det sjove her er at den fik en masse korrekte, ved kun at vælge positiv. Vi gætter os til at her er positiv "god", da vi ved at der er flere gode end onde personer. Derfor ser det ud som om at den labler alle personerne som værende god, hvilket er en god feature havde det været et menneske, der ser det gode i alle, men det er knap så god en feature for en klassifikation model, selv om det her giver en okay sucess rate. 
 
@@ -320,6 +342,11 @@ Som det kan ses på billede (øverst) så har den en sucess rate på 84%, hvilke
 ![Naive bayes result](/git_photos/results/Naive_Bayes.png)
 
 ## Large Language Models
+En large language model (LLM), er en type AI program, som er i stand til at genkende og generere tekst. Disse modeller er trænet med enorme datasæt, og bygger på machine learning gennem en type af neural network. 
+Large language models anvender deep learning, som er en type af machine learning, til at forstå hvordan karakterer, ord og sætninger fungerer. Dette indebære sandsynligheds analyse af ustruktureret data. Deep learning modellen kan så trænes til at genkende forskelle mellem dele af indhold uden indgriben fra en person. 
+Derefter udføreres der ydeligere træning for at raffinere modellen. 
+
+https://www.cloudflare.com/learning/ai/what-is-large-language-model/
 ### Valg af Model
 For at kunne køre vores chatbot læner vi os op ad en forudtrænet model, der kan hjælpe med at kunne forstå vores data. Vi har testet forskellige modeller for at finde den der passer bedst til vores projekt. En af vores krav var at den skulle kunne køre hurtigt, så derfor at vi lavet tidstest på de forskellige modeller, på en funktion til at hente og beabejde informationen fra databasen og på selve llm funktion. Vi har kørt igennem de forskellige modeller med samme spørgsmål og taget tid på dem. 
 
@@ -344,7 +371,7 @@ Spørgsmålet vi stiller er "Who os Merope Gaunts son?", hvilket er Tom Marvolo 
 
 Som det kan ses var den hurtigste af dem llama3, så det er den vi vælger at arbejde med. Ud fra svarene var der ikke nogen som havde det korrekte svar, selv om nogle laver et link mellem Merope Gaunt og Tom Riddle, er det ikke det korrekte. Det er også en grund til at vi vælger llama3 da den her ikke laver hallucinationer. 
 
-#### Ollama
+### Ollama
 Ollama er en open-source platform som kan bruges til at køre LLMs på en lokal maskine. Den indeholder et library af forskellige modeller både til generelt brug samt mere specialiserede modeller. Den indeholder en lokal API som giver kommunikation mellem applikationen og LLM, således at man kan sende prompts og få svar tilbage. Det er også at tilpasse konfigurationerne, således at man har flere muligheder når man arbejder med modellerne
 
 https://medium.com/@1kg/ollama-what-is-ollama-9f73f3eafa8b
@@ -354,17 +381,38 @@ Instruction-Tuned er optimiseret til dialog/chat brug, hvorimod pre-trained er b
 
 https://ollama.com/library/llama3
 
-## Argumentation of choices
+## Analyse af svar
+For at teste hvor god vores chatbot er, har vi lavet 20 spørgsmål som vi tester den på. Disse spørgsmål ligger i ["Harry Potter questions](Harry_Potter_questions.py). Vi har kørt dem igennem 3 gange for at give chatbotten en chance da den ikke kommer med samme svar hver gang. Når vi har stillet et spørgsmål, bliver det lagt i en database, hvor vi har været inde manuelt og give en score og skrive hvor mange sætninger der er. Scoren er på en skala fra 1-5 (hvor 1 er lavest og 5 er højest). Scoren er med til at vise hvor godt svaret er, ved at den får 5 hvis det er et helt korrekt svar med kun relevandte elementer, og den for 1 hvis den, enten ikke kan svaret, eller hvis den rammer helt ved siden af, med informationer der ikke er relevandte eller forkerte.
 
-## Design 
+### LLM vs sentence similarity
+Vi starter med at undersøge om der rent faktisk er en fordel ved at bruge en large lanuage model, derfor at vi sammenligent hvor mange korekte svar der kommer. Vi har kun kørt sentences simularity spørgsmålene én gang da de kommer med det samme svar hver gang. Fordelen ved sentences simularity er at det går rigtig meget hurtigere, men den giver ikke nødvendigivs "menneskelige" svar, som det kan med LLM. 
 
-## Data
+Her er et eksempel på et svar fra graf databasen med sentences simularity:
 
-## Code
+![eksempel på svar med ss graf](/git_photos/statistics/SS_graf_svar.png)
 
-## Artefacts 
+stillet op imod det svar fra graaf databasen med LLM, på samme spørgsmål:
 
-## Outcomes 
+![eksempel på svar med LLM graf](/git_photos/statistics/llm_graf_svaar.png)
+
+På billede kan se at sentence simularity på vector databasen kun rammer rigtigt 15% af gangene og sentence simularity på graf databasen kun har en accurcy på 5%. Hvor i mod hvis vi tilføjer en LLM får vi en accurcy 57.4% på vector databasen og 46.7% på graf databasen, hvilket er en væsentlig forbedring sammenlagt med at svarende er mere læselige. 
+
+![LLM vs SS](/git_photos/statistics/llm_Vs_SS.png)
+
+Hvis man kigger på pointene kan man se at der også er en stor forskel. På begge ved den faktisk ikke hvad der bliver snakket om halvdelen af gangene, og det er kun 5% at den rammer helt rigtigt.  
+
+![SS score percenteces](/git_photos/statistics/SS_score_percenteces.png)
+
+Her sammenligner vi med resultaterne når vi køre den med LLM. Svarene fra vector databasen fordeler sig sådan at 52.5% har en score på 5, og svarende fra graf databasen er det 25% der har scoreen 5. Dette er væsntligt højre og bekræfter at det er godt at vi har en LLM på. 
+
+![LLM score percenteces](/git_photos/statistics/llm_score_percenteces.png)
+
+### Kombinere databases
+
+### Hvor ofte siger den "I don't know"
+Da vi har kigget svarende igennem, ved vi at den af og til melder ud at den simpelhen ikke ved svaret, og vi er lidt interseret i hvor tit den siger det, og om der er forskel på hvor tit den siger det. Selv om det ikke er det idelle svar, så mener vi stadig at det er et bedre svar end at den finder på noget. Vi kan se at det ikke er så tit den siger det, og især at den falder til 5% når vi har kombineret databaserne. 
+
+![% I dont know](/git_photos/statistics/I_dont_know.png)
 
 ## Implementation instructions
 :warning: Disclaimer: Hvis man skal bruge chatbotten i streamlit appen skal man oprette databaserne til henholdsvis at kunne logge ind og have chat historik. Yderligere skal man hente dataen gennem jupyter notebooks og konvertere det til vector og graph, hvilket tager sammenlagt et par døgn. 
