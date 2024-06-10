@@ -320,7 +320,7 @@ Vi køre moddelen på vores træningssæt, og derefter tester det på testsætte
 
 ![Decision tree result](/git_photos/results/decision_tree.png)
 
-Her kan vi se at den har 6 true negative og 166 true positive, hvilket vil sige at den samlet har gættet rigtigt 172 gange, og samlet 39 gange forkert ud af 211, hvilket er en okay fordeling.
+Her kan vi se at den har 6 true negative og 166 true positive, hvilket vil sige at den samlet har gættet rigtigt 172 gange, og samlet 39 gange forkert ud af 211, det giver en accuray på 81.5%, hvilket er en okay fordeling.
 #### K-Nearest Neighbors
 K-nearest neighbors (KNN), er en machine learning metode, som kan anvendes til at håndtere klassifikation og regressionsproblemer. KNN er bl.a. anvendt til pattern recognition og data mining. Unsupervised KNN er fundament for andre metoder såsom manifold learning og spectral clusters. 
 
@@ -341,8 +341,12 @@ Det sjove her er at den fik en masse korrekte, ved kun at vælge positiv. Vi gæ
 Som det kan ses på billede (øverst) så har den en sucess rate på 84%, hvilket er en okay rate. 
 
 #### Naive Bayes classifier
-![Naive bayes result](/git_photos/results/Naive_Bayes.png)
+Naive Bayes classifier er baseret på Bayes' Theorem. Det er en familie af algoritmer der alle sammen arbejder på klassificere data.
 
+![Naive bayes result](/git_photos/results/Naive_Bayes.png)
+Her kan vi se at den faktisk klare sig præcis lige så godt som med SVM classifieren, selv om den fordeler svarende lidt anderledes
+
+Ud fra accuray kan vi se at den der klaret sig bedst i dette tilfælde var metoden KNN, så hvis vi skulle implementere dette ville vi benytte os af den metode.
 ## Large Language Models
 En large language model (LLM), er en type AI program, som er i stand til at genkende og generere tekst. Disse modeller er trænet med enorme datasæt, og bygger på machine learning gennem en type af neural network. 
 Large language models anvender deep learning, som er en type af machine learning, til at forstå hvordan karakterer, ord og sætninger fungerer. Dette indebære sandsynligheds analyse af ustruktureret data. Deep learning modellen kan så trænes til at genkende forskelle mellem dele af indhold uden indgriben fra en person. 
@@ -427,6 +431,26 @@ Da vi har kigget svarende igennem, ved vi at den af og til melder ud at den simp
 
 ![% I dont know](/git_photos/statistics/I_dont_know.png)
 
+### Spørgsmålene
+En anden ting vi har overvejet er om den kan finde ud af de spørgsmål vi stiller eller om det er "forkerte" spørgsmål. Her kigger vi på hvor mange gange den har svaret rigtigt og forkert på hver af spørgsmålene, ud fra alle gangene vi har spurgt den, dvs der er sammenlagt fra både vector, graf og når de er kombineret.
+
+![Questions with right or wrong](/git_photos/statistics/questions.png)
+
+De første 2 spørgsmål har været gode, eller der har været god og klar information i dataen. Den har i hvert fald kunne svare på dem alle gangene vi har spurgt. De fleste har den kunne svaret på min. 1 gang, men der er et spørgsmål som den aldrig har ramt korrekt, på trods af at der burde være et tydeligt svar, opbakket af dokumentation fra dataen. 
+
+Udmelbart virker det som nogle gode spørgsmål, det kan være lidt svært for den at svare, hvilket også er derfor vi ikke har stillet mere komplexe spørgsmål, som ellers ville være interssante at se om den kunne svare på. Det kunne fx være spørgmål som, "who founded the hogwarts house Harry potter belongs to?" hvor der er flere led i det. Eller "why" spørgmål som "Why did Harry give his winnings to Fred and George?" hvor svaret ligger mellem linjerne i bogen "at han ikke synes han havde fortjent dem og mente at de bedre ville kunne bruge dem". Vi spurgte den og den svarede, efter at have tænkt i 5 min, at den ikke vidste svaret, hvilket også lidt var forventet.
+
+### Antallet af sætninger
+Vi bemærkede mens vi gennemgik svarende at nogle gange var det en ulempe for det hvis den kom med flere sætninger. I Prompten har vi fortalt den at den maks har 5 sætninger at skrive svaret på, så vi kiggede på hvor mange sætninger den bruger i snit:
+
+![Avg number of sentences](/git_photos/statistics/avg_number_sentences.png)
+Vi kan se at når den bruger LLM og prompten med begrænsningen, bruger den ca. 1.5 sætninger.
+
+Vi kiggede også på om der var en sammenhæng mellem antallet af sætninger og score, ved at se på det avage af sætninger pr score:
+
+![avg sentences pr score](/git_photos/statistics/avg_Sentences_score.png)
+
+Umiddelbart så ser det ud som om der er en lille sammhæng, dog kan det være lidt skævt da den for en score på 1 hvis den skriver at den ikke ved det, og det bruger den kun en sætning på, og det kunne trække snittet ned. Vi vil mene udfra dette at den klare sig bedre på færre sætninger, da den har den højeste score på det laveste avage altal af sætninger. 
 ## Implementation instructions
 :warning: Disclaimer: Hvis man skal bruge chatbotten i streamlit appen skal man oprette databaserne til henholdsvis at kunne logge ind og have chat historik. Yderligere skal man hente dataen gennem jupyter notebooks og konvertere det til vector og graph, hvilket tager sammenlagt et par døgn. 
 
@@ -436,3 +460,8 @@ Da vi har kigget svarende igennem, ved vi at den af og til melder ud at den simp
 ### Use of the chatbot
 Hvis man har databaserne kørende og streamlit, så er chatbotten nem at bruge, man stiller bare et spørgsmål, den tænker og så får man et svar. 
 ![chatbot](/git_photos/chatbot.png)
+
+# Konklusion
+Vi vil mene at vi har et godt fundament til en chatbot, men der kan stadigvæk arbejdes på den for at forbedre den. Bla. så kunne vi gennemgå dataen og ryde op i den, for at forbedre den. Vi ved fx at diffbot har lavet nogen mærkelige noder en gang i mellem. Vi kunne teste flere spørgsmål på den. 
+
+Vores næste skridt vil være at forsøge at træne den måde den svare på, for at se om det kunne forbedre den. 
