@@ -329,6 +329,8 @@ https://scikit-learn.org/stable/modules/neighbors.html
 
 ![KNN result](/git_photos/results/kNN.png)
 
+Her kan vi se at den har en accurcy på 85%, og vi kan se hvordan det forholder sig i confusion matrixen.
+
 #### SVM classifier
 Supporrt Vector Machine er en kraftig Machine learning algorithm, der kan bruges til både at lave linær og non linær clasfication.  
 
@@ -408,6 +410,17 @@ Her sammenligner vi med resultaterne når vi køre den med LLM. Svarene fra vect
 ![LLM score percenteces](/git_photos/statistics/llm_score_percenteces.png)
 
 ### Kombinere databases
+Vi har kombineret svarende fra begge databaser, ved at bruge det svar vi får fra Graf databasen som kontext for svaret fra vector databasen. Det interssant her er om det forbedre accuray'en på svarene vi får. Accuray måler vi i procent udfra hvor mange rigtige den har fået. Her kan vi se at accuray faktisk ligger ret godt på databaserne hver for sig, med accuray på 57.4% og 46.7%, og det bliver forbedret en lille smule op til 61.7% ved at kombinere dem. Dette er klart en forbedring selv om det ikke er idelt at den kun har en accuray på 61.7%.
+
+![accuray LLM](/git_photos/statistics/accuracy_llm.png)
+
+Hvis man kigger på hvordan scoren fordeler sig, ser vi igen her hvordan de ligger på vector databasen og graf databasen.
+
+![LLM score percenteces](/git_photos/statistics/llm_score_percenteces.png)
+
+Her sammenligner vi med scorene hvor vi kombinere svarende. Vi kan se at 5 scoren stiger lidt og kommer på på 55%, hvilket virker som om at den får forbedret svarende lidt, dog er 1 scoren også steget, hvilket betyder at den enten oftere siger at den ikke ved svaret eller at den snakker om noget der er helt forkert. Dette er knapt så godt. 
+
+![Combined score percenteces](/git_photos/statistics/combined_score_percenteces.png)
 
 ### Hvor ofte siger den "I don't know"
 Da vi har kigget svarende igennem, ved vi at den af og til melder ud at den simpelhen ikke ved svaret, og vi er lidt interseret i hvor tit den siger det, og om der er forskel på hvor tit den siger det. Selv om det ikke er det idelle svar, så mener vi stadig at det er et bedre svar end at den finder på noget. Vi kan se at det ikke er så tit den siger det, og især at den falder til 5% når vi har kombineret databaserne. 
@@ -417,7 +430,9 @@ Da vi har kigget svarende igennem, ved vi at den af og til melder ud at den simp
 ## Implementation instructions
 :warning: Disclaimer: Hvis man skal bruge chatbotten i streamlit appen skal man oprette databaserne til henholdsvis at kunne logge ind og have chat historik. Yderligere skal man hente dataen gennem jupyter notebooks og konvertere det til vector og graph, hvilket tager sammenlagt et par døgn. 
 
-:warning: Disclaimer: For AI-delen af projektet er Login i streamlit er blevet disabled, for at man ikke skal have SQL server kørerne.
+:warning: Disclaimer: For AI-delen af projektet er Login i streamlit er blevet disabled, for at man ikke skal have SQL server kørerne. Men man bliver stadigvæk nødt til at have MongoDB, Neo4j og Chroma kørende.
 [Streamlit](#streamlit-app)
 
-### Use of the chat bot
+### Use of the chatbot
+Hvis man har databaserne kørende og streamlit, så er chatbotten nem at bruge, man stiller bare et spørgsmål, den tænker og så får man et svar. 
+![chatbot](/git_photos/chatbot.png)
